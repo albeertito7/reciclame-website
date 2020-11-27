@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html land="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= title %></title>
+  <%- include('partials/head.html') -%>
+</head>
+<body style="background: url('img/img11.png'); background-size: contain; background-repeat: no-repeat;">
+  <%- include('partials/navigation.html') -%>
+  <div class="container" style="padding-bottom: 100px; padding-top: 120px;">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card text-justify">
+          <div id="card-1" class="card card-rotating text-center">
+            <div class="face front">
+              <div class="avatar mx-auto white" data-aos="fade-right" data-aos-duration="500" style="position: relative; top: -30px;"><img src="/img/me.png" class="rounded-circle" alt="Sample avatar image.">
+              </div>
+              <div class="card-body">
+                <h4 class="font-weight-bold mb-3">Albert Pérez Datsira</h4>
+                <p class="font-weight-bold blue-text">Full Stack Developer</p>
+                <p class="font-weight-bold blue-text tr" key="p-desc-about">Student of Informatic Engeneering at<br/>University of Lleida</p>
+                <a class="rotate-btn" data-card="card-1" href="mailto:albertperezdatsira@gmail.com"><i class="fas fa-email"></i>albertperezdatsira@gmail.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-7 text-left text-black" data-aos="zoom-in-right" data-aos-duration="500" style="font-size: 20px;">
+        <p class="tr" key="p-about-1" style="font-size: 40px;">Hello!</p>
+        <p class="tr" key="p-about-2">My name is Albert, and I am the headmaster and creator of HealthSites</p>
+
+        <p class="tr" key="p-about-3">I am currently studying at the University of Lleida, and working at the same time</p>
+
+        <p class="tr" key="p-about-4">Also, I work independently to train myself further in more areas of the world of computers and information. Simply because I like to learn new things</p>
+
+        <p class="tr" key="p-about-5">So one day, I decided to undertake this project, because in the end it would be a path full of learning</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-left" data-aos="fade-down" data-aos-duration="500" style="margin-top: 100px; font-size: 20px;">
+        <h2 class="tr" key="h2-about-1" style="font-size: 40px;">The Idea</h2>
+
+        <p class="tr" key="p-about-6">The project came up as an idea for the end of degree work where a first version of the app was built.<br/>With many ideas for features, but without a clear direction</p>
+
+        <h2 class="tr" key="h2-about-2" style="font-size: 40px; margin-top: 50px;">New Goals</h2>
+        <p class="tr" key="p-about-7">This time we wanted to give a new air, so we designed a new interface much more natural and current. All this thinking about the user experience when interacting with the app</p>
+
+        <p class="tr" key="p-about-8">We demanded ourselves, to get a new version of the app easy to use and understand, and above all with its clear and well defined functionality</p>
+      </div>
+    </div>
+  </div>
+</body>
+<%- include('partials/footer.html') -%>
+</html>

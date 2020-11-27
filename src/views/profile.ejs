@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile page</title>
+  <%- include('partials/head.html') -%>
+  <link rel="stylesheet" href="./mvp.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js" defer></script>
+    <!--<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js" defer></script>-->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+  </head>
+<body>
+  <%- include('partials/navigation.html') -%>
+  <div class="container-fluid m-5" >
+    <section class="mb-4">
+      <div class="row">
+        <div class="col-sm-2" style="text-align: center;;">
+          <div class="avatar mx-auto white" data-aos="fade-right" data-aos-duration="500"><img style="max-width: 150px !important;  -webkit-box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.44); -moz-box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.44); box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.44);" src="/img/anonymous.jpg" class="rounded-circle" alt="Sample avatar image."></div>
+        </div>
+        <div class="col-sm-8" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
+          <div style="font-weight: bold; font-size: 18px;"><%= fullName %></div>
+          <div style="color: grey;">#<%= uid %></div>
+          <hr>
+          <div>
+            <a class="btn btn-success mr-2" type="button" data-toggle="modal" data-target="#exampleModalCenter">Account details</a>
+            <a class="btn btn-primary" href="/editProfile">Edit profile</a>
+            <a class="btn btn-primary mr-2" href="/createUser">Create user</a>
+            <a class="btn btn-secondary" href="/sessionLogout">Log out</a>
+          </div>
+        </div>
+      </div>
+      <hr style="width: 70% !important;">
+      <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8" style="display: flex;">
+          <div style="margin-right: 2%;"><span style="font-weight: bold;">Total users: </span> <%= totalUsers %></div>
+          <div><span style="font-weight: bold;">Admin users: </span> <%= adminUsers %></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+          <canvas id="myChart" width="400" height="180"></canvas>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Account Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label for="aud" class="col-sm-4 col-form-label">App</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="aud" disabled value="<%= aud %>" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="uid" class="col-sm-4 col-form-label">User uid</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="uid" disabled value="<%= uid %>" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="isAdmin" class="col-sm-4 col-form-label">Role</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="isAdmin" disabled value="<%= (isAdmin) ? 'Administrator' : 'User' %>" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="fullnAME" class="col-sm-4 col-form-label">Full name</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="fullName" disabled value="<%= fullName %>" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-4 col-form-label">Account email</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="email" disabled value="<%= email %>" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="emailVerified" class="col-sm-4 col-form-label">Email verified</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="emailVerified" disabled value="<%= (emailVerified) ? 'verified' : 'need verification' %>" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="city" class="col-sm-4 col-form-label">City</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="city" disabled value="<%= city %>" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="postalCode" class="col-sm-4 col-form-label">Postal code</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="postalCode" disabled value="<%= postalCode %>" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Total users', 'Users', 'Administrators'],
+            datasets: [{
+                labels: ['# of Total users', '# of Users', '# of Administrators'],
+                data: [<%= totalUsers %>, <%= totalUsers - adminUsers %>, <%= adminUsers %>],
+                backgroundColor: [
+                    'rgba(2, 179, 40, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(2, 179, 40, 1)', // green
+                    'rgba(54, 162, 235, 1)', // blue
+                    'rgba(255, 206, 86, 1)' // yellow
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            title: {
+              display: true,
+              text: 'Application users'
+            },
+            legend: {
+              display: false
+            }
+        }
+    });
+  });
+</script>
+
+</html>

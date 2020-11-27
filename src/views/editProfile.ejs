@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase Server Auth</title>
+    <%- include('partials/head.html') -%>
+    <link rel="stylesheet" href="/css/mvp.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js" defer></script>
+    <!--<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js" defer></script>-->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  </head>
+  <body>
+    <%- include('partials/navigation.html') -%>
+    <main>
+      <section class="mt-5">
+        <form id="edit-form" style="max-width: 500px; width: 80%;">
+          <div class="form-group row">
+            <label for="fullnAME" class="col-sm-4 col-form-label">Full name</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="fullName" placeholder="Enter your full name" value="<%= fullName %>" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="city" class="col-sm-4 col-form-label">City</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="city" placeholder="Enter your city" value="<%= city %>"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="postalCode" class="col-sm-4 col-form-label">Postal code</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="postalCode" placeholder="Enter your postal code" value="<%= postalCode %>"/>
+            </div>
+          </div>
+          <button class="pt-3 pb-3" style="float: right;">Save</button>
+        </form>
+      </section>
+
+      <script>
+        window.addEventListener("DOMContentLoaded", () => {
+          const firebaseConfig = {
+              apiKey: "AIzaSyBIbw7wtKNLRWAUtY4EoTD9ySRjvvUpTeg",
+              authDomain: "reciclame-app-b1f20.firebaseapp.com",
+              databaseURL: "https://reciclame-app-b1f20.firebaseio.com",
+              projectId: "reciclame-app-b1f20",
+              storageBucket: "reciclame-app-b1f20.appspot.com",
+              messagingSenderId: "293535846004",
+              appId: "1:293535846004:web:7b350c83eb76b6e3f30b21d",
+              measurementID: "G-2ZQQ9E2M3X"
+            };
+
+          firebase.initializeApp(firebaseConfig);
+          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
+          document
+            .getElementById("edit-form")
+            .addEventListener("submit", (event) => {
+              event.preventDefault();
+
+              openLoading("<h4>Saving the data ...</h4>");
+
+              const city = event.target.city.value,
+                postalCode = event.target.postalCode.value,
+                fullName = event.target.fullName.value;
+
+                console.log(firebase.auth().uid);
+
+                fetch("/saveUserData", {
+                    method: "POST",
+                    headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                    },
+                    body: JSON.stringify({
+                        'city': city,
+                        'fullName': fullName,
+                        'postalCode': postalCode
+                    }),
+                })
+                .then(() => {
+                  successAlert('<h4>User updated successfully</h4>');
+                  window.location.assign('/profile');
+                })
+                .catch(error => {
+                  console.log(error);
+                  errorAlert('<h4>Something wrong ocurred</h4><h6>' + error.message + '</h6>');
+                });
+              return false;
+            });
+          });
+      </script>
+    </main>
+  </body>
+</html>

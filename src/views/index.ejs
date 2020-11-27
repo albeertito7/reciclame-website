@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html land="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title><%= title %></title>
+	<%- include('partials/head.html') -%>
+
+</head>
+<body>
+	<%- include('partials/navigation.html') -%>
+		<header class="row">
+			<div class="col-lg-12 text-center">
+				<!--<img src="/img/HealthSitesLogo.png" alt="" style="max-width: 300px;">-->
+				<%- include('partials/carrousel.html') -%>
+			</div>
+		</header>
+
+	<!-- SECTION ONE -->
+	<div class="container-fluid" style="padding-bottom: 0px;" id="about">
+		<div class="row mt-5 mb-5 text-center">
+			<div class="col-sm-5 ml-5 p-5 lift-up" style="z-index: 1000;">
+				<img data-aos="zoom-in-right" data-aos-duration="500" style="max-width: 500px;" src="/img/reciclame1.png"/>
+			</div>
+			<div class="col text-left text-white" data-aos="fade-up-left" data-aos-duration="800" style="height: 50%;margin-top: 100px;">
+				<div class="row" style="padding: 100px; background-color: #3ace27; transform: rotate(-6deg);">
+					<span style="transform: rotate(6deg);">
+						<h2 class="tr" key="h2-index-1" style="font-weight: bold;">Do you want to make the world<br/>green again?</h2>
+						<h4 class="tr" key="h4-index-1">Improve recycling knowledge and understand wich items go in which bins to improve recycling rates.</h4>
+						<p class="tr" key="p-index-1" style="color: #a2f19d;">Including feature like: Show the correct bin for each item; Locate recycling containers near you; Read news about recycling, environment, and sustainability; Review your recycling history and rates; and Unlock and share recycling achievements</p>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-5" style="height: 300px; background-size: cover; background-image: url('img/img6.jpg')">
+			<div class="col"></div>
+			<div class="col-sm-5 mr-5 pt-5 pb-5 text-center">
+				<div class="tr" key="div-index-1" style="font-size: 30px; font-weight: bold; color: white; margin-bottom: 20px;">Comming soon</div>
+				<div class="lift-up" style="margin-right: 20px; display: inline-block;"><img data-aos="zoom-in-left" src="img/img8.png" width="265"/></div>
+				<div class="lift-up" style="display: inline-block;"><img data-aos="zoom-in-left" src="img/img9.png" width="240" /></div>
+			</div>
+			
+		</div>
+		<div class="row mb-5 text-center">
+			<div class="col text-left text-white" data-aos="fade-up-left" data-aos-duration="800" style="margin-top: 100px;">
+				<div class="row" style="padding: 100px;background-color: #3ace27; transform: rotate(6deg);">
+					<span style="transform: rotate(-6deg);">
+						<h2 class="tr" key="h2-index-2" style="font-weight: bold;">Fast, easy and sustainable!!</h2>
+						<h4 class="tr" key="p-index-2">Recycle correctly, locate the nearest containers, help the environment, and keep informed with the most relevant news about what really matters</h4>
+						<p class="tr" style="color: #a2f19d;">User our appllication for all these purposes and more</p>
+					</span>
+				</div>
+			</div>
+			<div class="col-sm-5 m-5 text-center lift-up" style="z-index: 1000;">
+				<img data-aos="zoom-in-right" data-aos-duration="500" style="max-width: 500px;" src="/img/reciclame2.png"/>
+			</div>
+		</div>
+
+		<!--<div class="row mb-5 text-center">
+			<div class="col-sm-5 ml-5 p-5 lift-up" style="z-index: 1000;">
+				<img data-aos="zoom-in-right" data-aos-duration="500" style="max-width: 500px;" src="/img/presentacioperfilhealthsite.png"/>
+			</div>
+			<div class="col text-left text-white" data-aos="fade-up-left" data-aos-duration="500" style="height: 50%;margin-top: 100px; display: flex; flex-direction: column; align-items: center;">
+				<div class="row" style="padding: 100px; background-color: #3ace27; transform: rotate(-6deg);">
+					<span style="transform: rotate(6deg);">
+						<h2 key="h2-index-1" style="font-weight: bold;">Promociona't, descobreix nous plaers,<br/>i explica'ns la teva experiència!!</h2>
+						<h4>Segueix les HealthSites més atractives, estiguis al corrent del seu contingut</h4>
+						<p style="color: #a2f19d;">Podràs veure les propietats, accedir a les dades del contacte, i veure els comentaris dels usuaris sobre les HealthSites que més t'interessin.</p>
+					</span>
+				</div>
+			</div>
+		</div>-->
+
+		<div class="row mt-5 p-5 text-center" style="background-image: url('img/img7.jpg'); margin-bottom: 50px;background-size: contain;">
+			<div class="col card home  m-4 lift-up" data-aos="fade-right" data-aos-duration="900">
+				<i class="fa fa-camera-retro fa-4x" aria-hidden="true"></i>
+				  <div class="card-body">
+				    <p class="card-text tr" key="p-index-3">User your camera to get information, its fast and easy</p>
+				  </div>
+			</div>
+			<div class="col card home m-4 lift-up" data-aos="fade-right" data-aos-duration="800">
+				<i class="fa fa-chart-bar fa-4x" aria-hidden="true"></i>
+				  <div class="card-body">
+				    <p class="card-text tr" key="p-index-4">Unlock recycling achievements, and review your recycling data</p>
+				  </div>
+			</div>
+			<div class="col card home m-4 lift-up" data-aos="fade-right" data-aos-duration="700">
+				<i class="fas fa-map fa-4x" aria-hidden="true"></i>
+				  <div class="card-body">
+				    <p class="card-text tr" key="p-index-5">Use our map to locate the nearest containers</p>
+				  </div>
+			</div>
+			<div class="col card home m-4 lift-up" data-aos="fade-right" data-aos-duration="600">
+				<i class="fas fa-globe-americas fa-4x" aria-hidden="true"></i>
+				  <div class="card-body">
+				    <p class="card-text tr" key="p-index-6">Share with your friends so we all save the the world together</p>
+				  </div>
+			</div>
+		</div>
+
+		<div class="container mb-5 pt-5 pb-5" data-aos="zoom-in" data-aos-duration="500">
+			<div class="mb-4 tr" key="div-index-2" style="font-size: 45px; text-align: center; font-weight: bold; color: black;">Learn more</div>
+			<div class="card mb-3" style="width: 100%;">
+				<div class="card-header font-weight-bold tr" key="div-index-7" style="font-size: 25px;">Do you have any question?</div>
+				<div class="card-body" style="display: flex; flex-direction: row;">
+					<div class="tr" key="div-index-8" style="width: 90%; padding-right: 20px;">
+						Contact us for any single question you have, we will be happy to answer you as your feedback helps us improve the user experience and many other things
+					</div>
+					<div style="width: 10%; text-align: center;">
+						<button type="button" class="btn btn-success lift-up tr" key="nav-contact" onclick="goToContact()">Contact</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<%- include('partials/footer.html') -%>
+</html>
