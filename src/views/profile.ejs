@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile page</title>
   <%- include('partials/head.html') -%>
-  <link rel="stylesheet" href="./mvp.css" />
+  <link rel="stylesheet" href="/css/mvp.css" />
   <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js" defer></script>
-    <!--<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js" defer></script>-->
     <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous"></script>
   </head>
 <body>
   <%- include('partials/navigation.html') -%>
@@ -24,11 +24,12 @@
           <div class="avatar mx-auto white" data-aos="fade-right" data-aos-duration="500"><img style="max-width: 150px !important;  -webkit-box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.44); -moz-box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.44); box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.44);" src="/img/anonymous.jpg" class="rounded-circle" alt="Sample avatar image."></div>
         </div>
         <div class="col-sm-8" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
-          <div style="font-weight: bold; font-size: 18px;"><%= fullName %></div>
+          <div style="font-weight: bold; font-size: 18px;"><%= fullName %><%- (!emailVerified) ? "<i class='fa fa-check ml-2' aria-hidden='true'></i>" : "" -%></div>
           <div style="color: grey;">#<%= uid %></div>
           <hr>
           <div>
-            <a class="btn btn-success mr-2" type="button" data-toggle="modal" data-target="#exampleModalCenter">Account details</a>
+            <a class="btn btn-success mr-2" type="button" data-toggle="modal" data-target="#accountDetailsModal">Account details</a>
+            <a class="btn btn-danger mr-2" type="button" data-toggle="modal" data-target="#updateCredentialsModal">Update credentials</a>
             <a class="btn btn-primary" href="/editProfile">Edit profile</a>
             <a class="btn btn-primary mr-2" href="/createUser">Create user</a>
             <a class="btn btn-secondary" href="/sessionLogout">Log out</a>
@@ -52,11 +53,11 @@
     </section>
   </div>
 </body>
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="accountDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Account Details</h5>
+        <h5 class="modal-title">Account Details</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -115,6 +116,45 @@
   </div>
 </div>
 
+<div class="modal fade" id="updateCredentialsModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Credentials</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="update-credentials-form" style="padding: 0px; box-shadow: none; border: none;">
+          <div class="form-group row">
+            <label for="email" class="col-sm-5 col-form-label">Email</label>
+            <div class="col-sm-7">
+              <input type="text" class="form-control" name="email" value="<%= email %>" required/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="password" class="col-sm-5 col-form-label">New Password</label>
+            <div class="col-sm-7">
+              <input type="password" class="form-control" name="password" value="" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="confirmPassword" class="col-sm-5 col-form-label">Confirm password</label>
+            <div class="col-sm-7">
+              <input type="password" class="form-control" name="confirmPassword" value="" />
+            </div>
+          </div>
+          <button class="btn btn-primary" style="float: right;">Update</a>
+        </form>
+      </div>
+      <div class="modal-footer">
+        Once your credentials are updated you will be redirected to the login screen for security reasons
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   $(document).ready(function () {
     var ctx = document.getElementById('myChart');
@@ -154,6 +194,46 @@
               display: false
             }
         }
+    });
+
+    document
+      .getElementById("update-credentials-form")
+      .addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        openLoading("<h4>Updating credentials ...</h4>");
+
+        const email = event.target.email.value,
+          password = event.target.password.value,
+          confirmPassword = event.target.confirmPassword.value;
+
+          if(password == confirmPassword) {
+            fetch("/updateCredentials", {
+              method: "POST",
+              headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+              },
+              body: JSON.stringify({
+                  'email': email,
+                  'password': CryptoJS.MD5(password),
+                  'confirmPassword': CryptoJS.MD5(passwordConfirm)
+              }),
+            })
+            .then(() => {
+              successAlert('<h4>User credentials updated successfully</h4>');
+              window.location.assign('/profile');
+            })
+            .catch(error => {
+              console.log(error);
+              errorAlert('<h4>Something wrong ocurred</h4><h6>' + error.message + '</h6>');
+            });
+          }
+          else {
+            console.log("Both passwords must be equals");
+
+          }
     });
   });
 </script>
