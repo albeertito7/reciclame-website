@@ -10,6 +10,7 @@ const csrf = require("csurf"); // to protect us Cross Site Forgery
 const csrfMiddleware = csrf({ cookie: true });
 
 const app = express();
+const defaultLang = 'en';
 
 //settings
 app.set('port', process.env.PORT || 4000);
@@ -23,6 +24,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(csrfMiddleware);
+app.use(function(req, res, next) {
+
+    let activeLang;
+    if(!req.cookies.current_culture) {
+        let expiresIn = 60 * 60 * 24 * 1 * 1000;
+        const options = { maxAge: expiresIn, httpOnly: true };
+        res.cookie('current_culture', defaultLang, options);
+        activeLang = defaultLang;
+    } else {
+        activeLang = req.cookies.current_culture;
+    }
+
+    res.locals.langClass = activeLang + '-' + activeLang.toUpperCase();
+    next();
+});
 
 // routes
 app.use(require('./routes/index'));

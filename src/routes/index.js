@@ -110,7 +110,7 @@ router.post("/sessionLogin", (req, res) => {
   console.log("sessionLogin post");
 
   const idToken = req.body.idToken.toString(),
-        expiresIn = 60 * 60 * 24 * 5 * 1000;
+        expiresIn = 60 * 60 * 24 * 1 * 1000;
 
   admin
     .auth()

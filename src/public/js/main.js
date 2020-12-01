@@ -10,6 +10,11 @@ $(document).ready(function () {
 		}
 	});
 
+
+	$(".custom-select.lang").change(function () {
+		let lang = $(this).val();
+	});
+
 	/*$.getJSON('js/lang.json', function (json) {
 
 		if(!localStorage.getItem('lang')) {
