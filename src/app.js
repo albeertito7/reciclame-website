@@ -24,6 +24,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(csrfMiddleware);
+/*app.use('/:local', (req, res, next) => {
+    console.log(req.params.local);
+
+    let activeLang;
+    if(!req.cookies.current_culture) {
+        let expiresIn = 60 * 60 * 24 * 1 * 1000;
+        const options = { maxAge: expiresIn, httpOnly: true };
+        res.cookie('current_culture', defaultLang, options);
+        activeLang = defaultLang;
+    } else {
+        activeLang = req.params.local || defaultLang;
+    }
+
+    res.locals.langClass = activeLang + '-' + activeLang.toUpperCase();
+    next();
+});*/
 app.use(function(req, res, next) {
 
     let activeLang;
@@ -45,6 +61,5 @@ app.use(require('./routes/index'));
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 module.exports = app;
