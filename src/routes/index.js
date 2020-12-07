@@ -16,6 +16,10 @@ router.get('/', (req, res) => {
 	res.render('index', { title: 'Reciclame' });
 });
 
+router.get('/about-us', (req, res) => {
+	res.render('about', { title: 'About Us Page' });
+});
+
 router.get('/contact', (req, res) => {
 	res.render('contact', { title: 'Contact Page' });
 });
@@ -90,6 +94,7 @@ router.get("/editProfile", checkCookieMiddleware, (req, res) => {
 			console.log(data);
 			res.render("editProfile", {
 				'fullName': data.fullName,
+				//'email': req.decodedClaims.email,
 				'city': data.city,
 				'postalCode': data.postalCode
 			});
@@ -160,9 +165,18 @@ router.post("/createUserData", (req, res) => {
 router.post("/saveUserData", verifySession, (req, res) => {
   	console.log("createUserData post");
 
+	/*admin.auth().updateUser(req.decodedClaims.uid, {
+		email: req.body.email
+	})
+	.then(function(userRecord) {})
+	.catch(function (error) {
+		console.log('Error updating user: ' + error);
+		res.status(500).send("Error Ocurred!");
+	});*/
+
 	db.collection("userData").doc(req.decodedClaims.uid).set({
-		city: req.body.city,
 		fullName: req.body.fullName,
+		city: req.body.city,
 		postalCode: req.body.postalCode
 	})
 	.then(function() {
@@ -171,6 +185,23 @@ router.post("/saveUserData", verifySession, (req, res) => {
 	})
 	.catch(function (error) {
 		console.log("Error updating the userData document: " + error);
+		res.status(500).send("Error Ocurred!");
+	});
+});
+
+router.post("/updateCredentials", verifySession, (req, res) => {
+	console.log("updateCredentials post");
+
+	admin.auth().updateUser(req.decodedClaims.uid, {
+		email: req.body.email,
+		password: req.body.password
+	})
+	.then(function(userRecord) {
+		console.log("User credentials correctly updated: " + userRecord);
+		res.end(JSON.stringify({ status: "success" }));
+	})
+	.catch(function (error) {
+		console.log('Error updating user credentials: ' + error);
 		res.status(500).send("Error Ocurred!");
 	});
 });

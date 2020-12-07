@@ -1,9 +1,9 @@
 $(document).ready(function () {
 	AOS.init();
 
-	let pathname = window.location.pathname, pages = ["/", "/contact", "/admin"]
+	let pathname = window.location.pathname, pages = ["/","/about-us", "/contact", "/admin"]
 	pages.find(function (el, idx, arr) {
-		if (el == pathname || (pathname != arr[0] && pathname != arr[1])) {
+		if (el == pathname || (pathname != arr[0] && pathname != arr[1] && pathname != arr[2])) {
 			$('.nav-item.active').removeClass("active");
 			$('.nav-item:nth-child(' + (idx + 1) + ')').addClass('active');
 			return;

@@ -10,15 +10,15 @@
 </head>
 <body>
 	<%- include('partials/navigation.html') -%>
-	<section>
+	<!--<section>
 		<div class="row">
-			<%- include('partials/carrousel.html') -%>
+			<%- /*include('partials/carrousel.html')*/ -%>
 		</div>
-	</section>
+	</section>-->
 	<!-- SECTION ONE -->
 	<section class="container-fluid pl-0 pr-0" style="padding-bottom: 0px;" id="about">
 		<div class="row mt-5 mb-5 text-center">
-			<div class="col-sm-5 ml-5 p-5 lift-up" style="z-index: 1000;">
+			<div class="col-lg-5 m-5 lift-up" style="z-index: 1000;">
 				<img data-aos="zoom-in-right" data-aos-duration="500" style="max-width: 500px;" src="/img/reciclame1.png"/>
 			</div>
 			<div class="col text-left text-white" data-aos="fade-up-left" data-aos-duration="800" style="height: 50%;margin-top: 100px;">
@@ -33,7 +33,6 @@
 		</div>
 		<!-- Responsive done -->
 		<div class="row mb-5 p-5 align-items-center" style="min-height: 400px; background-size: cover; background-image: url('img/img6.jpg')">
-			<!--<div class="col"></div>-->
 			<div class="col">
 				<div class="row float-right">
 					<div class="row mb-4 justify-content-center" style="font-size: 30px; font-weight: bold; color: white; margin-bottom: 20px;">Comming soon</div>
@@ -43,7 +42,6 @@
 					</div>
 				</div>
 			</div>
-			
 		</div>
 		<div class="row mb-5 text-center">
 			<div class="col text-left text-white" data-aos="fade-up-left" data-aos-duration="800" style="margin-top: 100px;">
@@ -55,35 +53,28 @@
 					</span>
 				</div>
 			</div>
-			<div class="col-sm-5 m-5 text-center lift-up" style="z-index: 1000;">
+			<div class="col-lg-5 m-5 text-center lift-up" style="z-index: 1000;">
 				<img data-aos="zoom-in-right" data-aos-duration="500" style="max-width: 500px;" src="/img/reciclame2.png"/>
 			</div>
 		</div>
 
-		<div class="row p-md-5 p-3 text-center justify-content-center" style="background-image: url('img/img7.jpg'); background-size: cover;">
-			<div class="col-lg col-sm-5 card home p-4 m-3 lift-up" data-aos="fade-right" data-aos-duration="900">
-				<i class="fa fa-camera-retro fa-4x" aria-hidden="true"></i>
-				  <div class="card-body">
-				    <p class="card-text">User your camera to get information, its fast and easy</p>
-				  </div>
+		<!-- Responsive done -->
+		<div id="responsive-background-size" class="row py-5 px-3 text-center justify-content-center" style="background-image: url('img/img7.jpg'); background-size: cover;">
+			<div class="col-xl col-lg-6 card home p-4 m-3 lift-up justify-content-center align-content-center" data-aos="fade-right" data-aos-duration="800">
+				<i class="fa fa-camera-retro fa-4x mb-4" aria-hidden="true"></i>
+				<p class="card-text">User your camera to get information, its fast and easy</p>
 			</div>
-			<div class="col-lg col-sm-5 card home p-4 m-3 lift-up" data-aos="fade-right" data-aos-duration="800">
-				<i class="fa fa-chart-bar fa-4x" aria-hidden="true"></i>
-				  <div class="card-body">
-				    <p class="card-text">Unlock recycling achievements, and review your recycling data</p>
-				  </div>
+			<div class="col-xl col-lg-6 card home p-4 m-3 lift-up justify-content-center align-content-center" data-aos="fade-right" data-aos-duration="800">
+				<i class="fa fa-chart-bar fa-4x mb-4" aria-hidden="true"></i>
+				<p class="card-text">Unlock recycling achievements, and review your recycling data</p>
 			</div>
-			<div class="col-lg col-sm-5 card home p-4 m-3 lift-up" data-aos="fade-right" data-aos-duration="700">
-				<i class="fas fa-map fa-4x" aria-hidden="true"></i>
-				  <div class="card-body">
-				    <p class="card-text">Use our map to locate the nearest containers</p>
-				  </div>
+			<div class="col-xl col-lg-6 card home p-4 m-3 lift-up justify-content-center align-content-center" data-aos="fade-right" data-aos-duration="800">
+				<i class="fas fa-map fa-4x mb-4" aria-hidden="true"></i>
+				<p class="card-text">Use our map to locate the nearest containers</p>
 			</div>
-			<div class="col-lg col-sm-5 card home p-4 m-3 lift-up" data-aos="fade-right" data-aos-duration="600">
-				<i class="fas fa-globe-americas fa-4x" aria-hidden="true"></i>
-				  <div class="card-body">
-				    <p class="card-text">Share with your friends so we all save the the world together</p>
-				  </div>
+			<div class="col-xl col-lg-6 card home p-4 m-3 lift-up justify-content-center align-content-center" data-aos="fade-right" data-aos-duration="800">
+				<i class="fas fa-globe-americas fa-4x mb-4" aria-hidden="true"></i>
+				<p class="card-text">Share with your friends so we all save the the world together</p>
 			</div>
 		</div>
 		
@@ -93,16 +84,26 @@
 			<div class="card mb-3" style="width: 100%;">
 				<div class="card-header font-weight-bold" style="font-size: 25px;">Do you have any question?</div>
 				<div class="card-body row align-items-top flex-md-row flex-column">
-					<div class="col-md-9 col-lg-10 pb-4 pb-sm-0">
-						Contact us for any single question you have, we will be happy to answer you as your feedback helps us improve the user experience and many other things
+					<div class="col-md-9 col-lg-10 pb-4 pb-md-0">
+						Contact us for any single question you have, we will be happy to answer you as your feedback helps us improve the user experience and many other things.</div>
+					<div class="col-md-3 col-lg-2 text-md-center">
+						<button type="button" class="btn px-3 py-2 text-white lift-up" style="border-radius: 100px; border: 3px solid #01802b; background-color: #02b328;" onclick="goToContact()">Contact us</button>
+					</div>
+				</div>
+			</div>
+			<div class="card mb-3" style="width: 100%;">
+				<div class="card-header font-weight-bold" style="font-size: 25px;">Do you want to know more about the project?</div>
+				<div class="card-body row align-items-top flex-md-row flex-column">
+					<div class="col-md-9 col-lg-10 pb-4 pb-md-0">
+						Visit the Reciclame project github repository, to get more information.
 					</div>
 					<div class="col-md-3 col-lg-2 text-md-center">
-						<button type="button" class="btn btn-success lift-up" onclick="goToContact()">Contact</button>
+						<a href="https://github.com/danielb05/reciclame" target="_blank" type="button" class="btn px-3 py-2 text-white lift-up" style="border-radius: 100px; border: 3px solid #01802b; background-color: #02b328;">Repository</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+	<%- include('partials/footer.html') -%>
 </body>
-<%- include('partials/footer.html') -%>
 </html>

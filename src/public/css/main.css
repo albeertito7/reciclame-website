@@ -73,6 +73,7 @@ h1 {
 	padding-bottom: 20px;
 	padding-top: 30px;*/
 	max-width: 400px;
+	min-height: 300px;
 	-webkit-box-shadow: 1px 0px 20px 3px rgba(5,5,5,0.24);
 	-moz-box-shadow: 1px 0px 20px 3px rgba(5,5,5,0.24);
 	box-shadow: 1px 0px 20px 3px rgba(5,5,5,0.24);
@@ -82,9 +83,9 @@ h1 {
 	font-size: 18px;
 }
 
-.card.home > .card-body {
+/*.card.home > .card-body {
 	margin-top: 10px;
-}
+}*/
 
 .card > i {
 	color: black;
@@ -132,6 +133,17 @@ h1 {
 .row {
 	margin-right: 0px !important;
 	margin-left: 0px !important;
+}
+
+#admin-link:hover {
+	background-color: white;
+	color: #01802b !important;
+}
+
+@media(min-width: 1200px) {
+	#responsive-background-size {
+		background-size: contain !important;
+	}
 }
 
 
