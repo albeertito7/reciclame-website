@@ -29,9 +29,36 @@ router.get('/admin', checkCookieMiddleware, (req, res) => {
 	res.redirect("/profile");
 });
 
-router.get('/createUser', checkCookieMiddleware, (req, res) => {
-	console.log("router /createUser");
-	res.render('signup');
+router.post("/sessionLogin", (req, res) => {
+  console.log("sessionLogin post");
+
+  const idToken = req.body.idToken.toString(),
+        expiresIn = 60 * 60 * 24 * 1 * 1000;
+
+  admin
+    .auth()
+    .createSessionCookie(idToken, { expiresIn })
+    .then(
+      (sessionCookie) => {
+        console.log("cookie created: " + sessionCookie);
+        const options = { maxAge: expiresIn, httpOnly: true }; // secure: true
+		res.cookie('session', sessionCookie, options);
+		
+		admin.auth().verifyIdToken(idToken).then(function(decodedClaims) {
+			res.redirect('/profile');
+			res.end(JSON.stringify({ status: "success" }));
+		});
+      },
+      (error) => {
+        console.log("cookie creation error unauthorized request");
+        res.status(401).send("UNAUTHORIZED REQUEST!");
+      }
+    );
+});
+
+router.get("/sessionLogout", (req, res) => {
+	res.clearCookie("session");
+	res.render("login");
 });
 
 router.get("/profile", checkCookieMiddleware, (req, res) => {
@@ -106,36 +133,36 @@ router.get("/editProfile", checkCookieMiddleware, (req, res) => {
 	});
 });
 
-router.get("/sessionLogout", (req, res) => {
-	res.clearCookie("session");
-	res.render("login");
+router.get('/createUser', checkCookieMiddleware, (req, res) => {
+	console.log("router /createUser");
+	res.render('signup');
 });
 
-router.post("/sessionLogin", (req, res) => {
-  console.log("sessionLogin post");
+router.post("/saveUserData", verifySession, (req, res) => {
+	console.log("createUserData post");
 
-  const idToken = req.body.idToken.toString(),
-        expiresIn = 60 * 60 * 24 * 1 * 1000;
+  /*admin.auth().updateUser(req.decodedClaims.uid, {
+	  email: req.body.email
+  })
+  .then(function(userRecord) {})
+  .catch(function (error) {
+	  console.log('Error updating user: ' + error);
+	  res.status(500).send("Error Ocurred!");
+  });*/
 
-  admin
-    .auth()
-    .createSessionCookie(idToken, { expiresIn })
-    .then(
-      (sessionCookie) => {
-        console.log("cookie created: " + sessionCookie);
-        const options = { maxAge: expiresIn, httpOnly: true }; // secure: true
-		res.cookie('session', sessionCookie, options);
-		
-		admin.auth().verifyIdToken(idToken).then(function(decodedClaims) {
-			res.redirect('/profile');
-			res.end(JSON.stringify({ status: "success" }));
-		});
-      },
-      (error) => {
-        console.log("cookie creation error unauthorized request");
-        res.status(401).send("UNAUTHORIZED REQUEST!");
-      }
-    );
+  db.collection("userData").doc(req.decodedClaims.uid).set({
+	  fullName: req.body.fullName,
+	  city: req.body.city,
+	  postalCode: req.body.postalCode
+  })
+  .then(function() {
+	  console.log("UserData document correctly updated");
+	  res.end(JSON.stringify({ status: "success" }));
+  })
+  .catch(function (error) {
+	  console.log("Error updating the userData document: " + error);
+	  res.status(500).send("Error Ocurred!");
+  });
 });
 
 router.post("/createUserData", (req, res) => {
@@ -160,33 +187,6 @@ router.post("/createUserData", (req, res) => {
       console.log("Error creating the userData document: " + error);
       res.status(500).send("Error Ocurred!");
     });
-});
-
-router.post("/saveUserData", verifySession, (req, res) => {
-  	console.log("createUserData post");
-
-	/*admin.auth().updateUser(req.decodedClaims.uid, {
-		email: req.body.email
-	})
-	.then(function(userRecord) {})
-	.catch(function (error) {
-		console.log('Error updating user: ' + error);
-		res.status(500).send("Error Ocurred!");
-	});*/
-
-	db.collection("userData").doc(req.decodedClaims.uid).set({
-		fullName: req.body.fullName,
-		city: req.body.city,
-		postalCode: req.body.postalCode
-	})
-	.then(function() {
-		console.log("UserData document correctly updated");
-		res.end(JSON.stringify({ status: "success" }));
-	})
-	.catch(function (error) {
-		console.log("Error updating the userData document: " + error);
-		res.status(500).send("Error Ocurred!");
-	});
 });
 
 router.post("/updateCredentials", verifySession, (req, res) => {
@@ -239,7 +239,7 @@ function checkCookieMiddleware(req, res, next) {
 		})
 }
 
-/*app.post('/contact', (req, res) => {
+/*router.post('/contact', (req, res) => {
 	console.log("Contact");
 
   const smtpTrans = nodemailer.createTransport({
@@ -269,6 +269,5 @@ function checkCookieMiddleware(req, res, next) {
     }
   })
 })*/
-
 
 module.exports = router;
