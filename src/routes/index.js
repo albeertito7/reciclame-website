@@ -206,6 +206,10 @@ router.post("/updateCredentials", verifySession, (req, res) => {
 	});
 });
 
+router.get("/getUsers", function (req, res) {
+	console.log("getUsers get");
+});
+
 function verifySession(req, res, next) {
 	const sessionCookie = req.cookies.session || "";
 	admin
