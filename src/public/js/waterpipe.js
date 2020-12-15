@@ -28,6 +28,7 @@
             //Background
             bgColorInner: "#ffffff",
             bgColorOuter: "#666666",
+            bgTransparent: false
         };
 
     var TWO_PI = 2*Math.PI;
@@ -81,23 +82,25 @@
             
         },
         fillBackground: function () {
-            var outerRad = Math.sqrt(this.displayWidth*this.displayWidth + this.displayHeight*this.displayHeight)/2;
-            this.niceGradient = new SmokeNiceBG(this.displayWidth*0.75,this.displayHeight/2*0.75,0,this.displayWidth/2,this.displayHeight/4,outerRad);
+            if(!this.settings.bgTransparent) {
+                var outerRad = Math.sqrt(this.displayWidth*this.displayWidth + this.displayHeight*this.displayHeight)/2;
+                this.niceGradient = new SmokeNiceBG(this.displayWidth*0.75,this.displayHeight/2*0.75,0,this.displayWidth/2,this.displayHeight/4,outerRad);
 
-            var hex = this.settings.bgColorInner.replace('#','');
+                var hex = this.settings.bgColorInner.replace('#','');
 
-            var r0 = parseInt(hex.substring(0,2), 16), 
-                g0 = parseInt(hex.substring(2,4), 16), 
-                b0 = parseInt(hex.substring(4,6), 16);
+                var r0 = parseInt(hex.substring(0,2), 16), 
+                    g0 = parseInt(hex.substring(2,4), 16), 
+                    b0 = parseInt(hex.substring(4,6), 16);
 
-            hex = this.settings.bgColorOuter.replace('#','');
-            var r1 = parseInt(hex.substring(0,2), 16), 
-                g1 = parseInt(hex.substring(2,4), 16), 
-                b1 = parseInt(hex.substring(4,6), 16);
+                hex = this.settings.bgColorOuter.replace('#','');
+                var r1 = parseInt(hex.substring(0,2), 16), 
+                    g1 = parseInt(hex.substring(2,4), 16), 
+                    b1 = parseInt(hex.substring(4,6), 16);
 
-            this.niceGradient.addColorStop(0,r0,g0,b0);
-            this.niceGradient.addColorStop(1,r1,g1,b1);     
-            this.niceGradient.fillRect(this.context,0,0,this.displayWidth,this.displayHeight);
+                this.niceGradient.addColorStop(0,r0,g0,b0);
+                this.niceGradient.addColorStop(1,r1,g1,b1);     
+                this.niceGradient.fillRect(this.context,0,0,this.displayWidth,this.displayHeight);
+            }
         },
         setCircles: function () {
             var i;

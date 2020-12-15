@@ -11,8 +11,8 @@
 <body>
     <%- include('partials/navigation.html') -%>
     <div class="container-fluid pt-5 px-0" style="position: relative;">
-        <div id="wavybg-wrapper" style="position: absolute; width: 100%; height: 100% !important; top: -100px; z-index: -1;"> 
-            <canvas style="width: 100%; height: 80%; max-height: 900px;"></canvas>
+        <div id="wavybg-wrapper" style="position: absolute; width: 100%; height: 100% !important; z-index: -1;"> 
+            <canvas style="width: 100%; height: 100%; max-height: 900px;"></canvas>
         </div>
         <div class="row text-center text-black align-items-top justify-content-center" style="position: relative; z-index: 1; color: black; text-transform: capitalize;">
             <h1>" Let's make the world green again ! "</h1>
@@ -22,7 +22,7 @@
                 <div class="profile-name">Albert</div>
                 <div class="profile-username">@albeertito7</div>
             </div>
-            <div class="profile-card-2 m-2" data-aos="fade-down" data-aos-duration="1000"><img src="img/profile-daniel-new.jpeg" class="img img-responsive">
+            <div class="profile-card-2 m-2" data-aos="fade-down" data-aos-duration="1000"><img src="img/profile-daniel.jpg" class="img img-responsive">
                 <div class="profile-name">Daniel</div>
                 <div class="profile-username">@danielb05</div>
             </div>
@@ -30,13 +30,13 @@
                     <div class="profile-name">Francesc</div>
                     <div class="profile-username">@elskater98</div>
                 </div>
-            <div class="profile-card-2 m-2" data-aos="fade-down" data-aos-duration="2500"><img src="img/profile-ziad.jpg" class="img img-responsive">
+            <div class="profile-card-2 m-2" data-aos="fade-down" data-aos-duration="2500"><img src="img/profile-ziad-cigar.jpg" class="img img-responsive">
                 <div class="profile-name">Ziad</div>
                 <div class="profile-username">@ziad-93</div>
             </div>
         </div>
         <div class="row justify-content-center align-items-center px-3 mt-5">
-            <div class="col-sm-11 px-md-5 px-4 py-5 lift-up" data-aos="fade-down" data-aos-duration="1000" style="border: 4px solid white; max-width: 850px; background-color: #019521; color: white; -webkit-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); border-radius: 50px;">
+            <div class="col-sm-11 px-md-5 px-4 py-5 lift-up" data-aos="fade-down" data-aos-duration="1000" style="border: 5px solid white; max-width: 850px; background-color: #02b328; color: white; -webkit-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); border-radius: 50px;">
                 <h2 style="font-weight: bold;">Who is behind this project?</h2>
                 <p style="font-size: 18px;">We are a team of enthusiastic young entrepeneurs who came together to develop an idea origniated in Catalunya, when it was noticed that many of our friends and family did not recycle, just because they did not feel the responsability nor know how to do it.</p>
             </div>
@@ -52,17 +52,17 @@
             //Default values
             gradientStart: '#636363',
             gradientEnd: '#696969',
-            smokeOpacity: 0.05,
+            smokeOpacity: 0.02,
             numCircles: 1,
             maxMaxRad: 'auto',
             minMaxRad: 'auto',
             minRadFactor: 0,
             iterations: 8,
             drawsPerFrame: 10,
-            lineWidth: 1,
-            speed: 0.1,
-            bgColorInner: "#ffffff",
-            bgColorOuter: "#ffffff"
+            lineWidth: 0.5,
+            speed: 0.5,
+            bgColorInner: "#ffffff55",
+            bgColorOuter: "#ffffff55",
         });
     });
 </script>
