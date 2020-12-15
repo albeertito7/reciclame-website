@@ -21,10 +21,10 @@
   </head>
 <body>
   <%- include('partials/navigation.html') -%>
-  <div class="container-fluid m-5" >
+  <div class="container-fluid my-5 px-5" >
     <section class="mb-4">
       <div class="row">
-        <div class="col-sm-2" style="text-align: center;;">
+        <div class="px-3 mb-3" style="text-align: center;">
           <div class="avatar mx-auto white" data-aos="fade-right" data-aos-duration="500"><img style="max-width: 150px !important;  -webkit-box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.44); -moz-box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.44); box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.44);" src="/img/anonymous.jpg" class="rounded-circle" alt="Sample avatar image."></div>
         </div>
         <div class="col-sm-8" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
@@ -40,10 +40,9 @@
           </div>
         </div>
       </div>
-      <hr style="width: 70% !important;">
+      <hr style="width: 100% !important;">
       <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8" style="display: flex;">
+        <div class="col-sm-10" style="display: flex;">
           <div style="margin-right: 2%;"><span style="font-weight: bold;">Total users: </span> <%= totalUsers %></div>
           <div><span style="font-weight: bold;">Admin users: </span> <%= adminUsers %></div>
         </div>
