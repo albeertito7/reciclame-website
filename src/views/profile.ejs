@@ -6,19 +6,18 @@
   <title>Profile page</title>
   <%- include('partials/head.html') -%>
   <link rel="stylesheet" href="/css/mvp.css" />
-  <link rel="stylesheet" src="/css/kendo.default.mobile.min.css"></link>
-  <link rel="stylesheet" src="/css/kendo.material.min.css"></link>
-  <link rel="stylesheet" src="/css/kendo.common-material.min.css"></link>
-  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous"></script>
-    <script src="/js/kendo.all.min.js"></script>
-  </head>
+  <!--<link rel="stylesheet" href="/kendo/kendo.default.mobile.min.css"></link>-->
+  <link rel="stylesheet" href="/kendo/styles/kendo.material.min.css"></link>
+  <link rel="stylesheet" href="/kendo/styles/kendo.common-material.min.css"></link>
+  <link rel="stylesheet" href="/kendo/styles/kendo.bootstrap.min.css"></link>
+  <!--<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>-->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous"></script>
+  <script src="/kendo/js/kendo.all.min.js"></script>
+</head>
 <body>
   <%- include('partials/navigation.html') -%>
   <div class="container-fluid my-5 px-5" >
@@ -41,20 +40,23 @@
         </div>
       </div>
       <hr style="width: 100% !important;">
-      <div class="row">
-        <div class="col-sm-10" style="display: flex;">
+      <div class="row mb-2">
+        <div class="col-sm-6" style="display: flex;">
           <div style="margin-right: 2%;"><span style="font-weight: bold;">Total users: </span> <%= totalUsers %></div>
           <div><span style="font-weight: bold;">Admin users: </span> <%= adminUsers %></div>
         </div>
+        <div class="col-sm-6 d-flex justify-content-end">
+          <a id="show_stats" class="btn btn-primary mr-2">Show stats</a>
+          <a id="show_records" class="btn btn-primary mr-2">Show records</a>
+        </div>
       </div>
-      <!--<div class="row">
-        <div class="col-sm-2"></div>
+      <div id="stats" class="row" style="display: none;">
         <div class="col-sm-8">
           <canvas id="myChart" width="400" height="180"></canvas>
         </div>
-      </div>-->
-      <div class="row">
-        <div id="wrapper_grid">
+      </div>
+      <div id="records" class="row">
+        <div id="wrapper_grid" class="col">
           <div id="grid"></div>
         </div>
       </div>
@@ -164,62 +166,148 @@
 </div>
 
 <script>
+  var dataSource;
   $(document).ready(function () {
-    /*var ctx = document.getElementById('myChart');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Total users', 'Users', 'Administrators'],
-            datasets: [{
-                labels: ['# of Total users', '# of Users', '# of Administrators'],
-                data: [<%= totalUsers %>, <%= totalUsers - adminUsers %>, <%= adminUsers %>],
-                backgroundColor: [
-                    'rgba(2, 179, 40, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(2, 179, 40, 1)', // green
-                    'rgba(54, 162, 235, 1)', // blue
-                    'rgba(255, 206, 86, 1)' // yellow
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            },
-            title: {
-              display: true,
-              text: 'Application users'
-            },
-            legend: {
-              display: false
-            }
-        }
-    });*/
-    
-    console.log("init datasource");
-    var dataSource = new kendo.data.DataSource({
+    dataSource = new kendo.data.DataSource({
         transport: {
             read: {
-              url: "/getUsers"
+              url: "/getUsers",
+              dataType: "json"
             }
         },
+        schema: {
+                model: {
+                    id: "uid",
+                    fields: {
+                        email: { type: "string" },
+                        emailVerified: { type: "bit" },
+                        displayName: { type: "string" },
+                        metadata: { defaultValue: {} },
+                        creationTime: {
+                          type: "date",
+                          from: "metadata.creationTime"
+                        },
+                        lastSignInTime: {
+                          type: "date",
+                          from: "metadata.lastSignInTime"
+                        },
+                        lastRefreshTime: {
+                          type: "date",
+                          from: "metadata.lastRefreshTime"
+                        }
+                    }
+                }
+            },
+        pageSize: 20,
     });
 
+    function toggleScrollbar(e) {
+        let gridWrapper = e.sender.wrapper, gridTable = e.sender.table, gridArea = gridTable.closest(".k-grid-content");
+        gridWrapper.toggleClass("no-scrollbar", gridTable[0].offsetHeight < gridArea[0].offsetHeight)
+    };
+
     $("#grid").kendoGrid({
-      dataSource: dataSource
+      toolbar: [
+            { text: "Export to PDF", className: "k-grid-pdf toolbar-style", id: "pdf" },
+            { text: "Export to Excel", className: "k-grid-excel toolbar-style", id: "excel" }
+        ],
+      excel: {
+          fileName: "Reciclame_Export.xlsx",
+          allPages: !0
+      },
+      excelExport: function(e){
+          var sheet = e.workbook.sheets[0];
+          var data = dataSource.data();
+          var gridColumns = $("#grid").data("kendoGrid").columns;
+          var columns = gridColumns.map(function(col){
+              return {
+                  value: col.title ? col.title : col.field,
+                  autoWidth: !0,
+                  background: "#7a7a7a",
+                  color: "#fff"
+              };
+          });
+
+          var rows = [{cells:columns, type: "header"}];
+
+          for (var i = 0; i < data.length; i++){
+              var rowCells = [];
+              for(var j=0;j < gridColumns.length;j++){
+                  var cellValue = data[i][gridColumns[j].field];
+                  rowCells.push({value: cellValue});
+              }
+              rows.push({cells: rowCells, type: "data"});
+          }
+          sheet.rows = rows;
+      },
+      pdf: {
+          fileName: "Reciclame_Export.pdf",
+          allPages: !0,
+          avoidLinks: !0,
+          paperSize: "A4",
+          margin: { right: "0.4cm", top: "1cm", bottom: "1cm", left: "0.4cm"},
+          landscape: !0,
+          repeatHeaders: !0,
+          template: $("#page-template").html(),
+          scale: 0.4,
+      },
+      dataSource: dataSource,
+      sortable: !0,
+      height: 550,
+      pageable: {
+        refresh: !1,
+        info: !1,
+        pageSizes: [5, 10, 15, 20, "all"],
+        messages: {
+                empty: "No users",
+                itemsPerPage: "Users for page",
+                previous: "Previous",
+                next: "Next",
+                first: "First",
+                last: "Last"
+            }
+      },
+      dataBound: function (e) {
+        this.autoFitColumn(0);
+        this.autoFitColumn(1);
+        this.autoFitColumn(2);
+        this.autoFitColumn(3);
+        this.autoFitColumn(4);
+        toggleScrollbar(e);
+      },
+      columns: [
+        {
+          field: "uid",
+          title: "uid"
+        },
+        {
+          field: "email",
+          title: "email"
+        },
+        {
+          field: "emailVerified",
+          title: "emailVerified",
+          template: "#if(emailVerified) {# <i class='fas fa-check'></i>#} else {#<i class='fas fa-times'></i>#}#"
+        },
+        {
+          field: "metadata.creationTime",
+          title: "CreationTime",
+          format: "{0:dd/MM/yyyy - HH:mm}",
+        },
+        {
+          field: "metadata.lastSignInTime",
+          title: "LastSignInTime",
+          format: "{0:dd/MM/yyyy - HH:mm}",
+        }
+      ]
     });
 
     dataSource.bind("error", function(e) {
       console.log("Error dataSource /getUsers: " + e);
-    })
+    });
+
+    let grid = $("#grid");
+    grid.find(".k-grid-toolbar").insertAfter($("#grid .k-pager-sizes.k-label"));
 
     document
       .getElementById("update-credentials-form")
@@ -260,7 +348,54 @@
 
           }
     });
+
+    $("#show_stats").click(function () {
+      $("#records").hide();
+      $("#stats").show();
+      var ctx = document.getElementById('myChart');
+      var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: ['Total users', 'Users', 'Administrators'],
+              datasets: [{
+                  labels: ['# of Total users', '# of Users', '# of Administrators'],
+                  data: [<%= totalUsers %>, <%= totalUsers - adminUsers %>, <%= adminUsers %>],
+                  backgroundColor: [
+                      'rgba(2, 179, 40, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(2, 179, 40, 1)', // green
+                      'rgba(54, 162, 235, 1)', // blue
+                      'rgba(255, 206, 86, 1)' // yellow
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              },
+              title: {
+                display: true,
+                text: 'Application users'
+              },
+              legend: {
+                display: false
+              }
+          }
+      });
+    });
+
+    $("#show_records").click(function () {
+      $("#stats").hide();
+      $("#records").show();
+    });
   });
 </script>
-
 </html>
