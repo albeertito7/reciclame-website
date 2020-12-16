@@ -226,3 +226,17 @@ textarea:focus, textarea[type]:focus, input:focus, input[type]:focus {
 	padding: 0px;
 }
 
+.k-header.k-grid-toolbar {
+    background: none !important;
+    padding: 0;
+    border: none;
+	float: right;
+}
+
+.no-scrollbar .k-grid-header {
+    padding: 0 !important;
+}
+
+.no-scrollbar .k-grid-content {
+    overflow-y: visible;
+}
