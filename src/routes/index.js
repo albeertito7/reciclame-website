@@ -206,9 +206,30 @@ router.post("/updateCredentials", verifySession, (req, res) => {
 	});
 });
 
-router.get("/getUsers", function (req, res) {
-	console.log("getUsers get");
+router.get("/getUsers", verifySession, function (req, res) {
+	console.log("/getUsers");
+	listAllUsers(res, []);
 });
+
+function listAllUsers (res, result, nextPageToken) {
+	admin
+	  .auth()
+	  .listUsers(1000, nextPageToken)
+	  .then((listUsersResult) => {
+		console.log(listUsersResult.users);
+		result = result.concat(listUsersResult.users);
+		if (listUsersResult.pageToken) {
+		  listAllUsers(res, result, listUsersResult.pageToken);
+		} else {
+			res.status(200).setHeader('Content-Type', 'application/json');
+			res.json(result);
+		}
+	  })
+	  .catch((error) => {
+		console.log('Error listing users:', error);
+		res.status(500).send("Error ocurred!");
+	  });
+  };
 
 function verifySession(req, res, next) {
 	const sessionCookie = req.cookies.session || "";
