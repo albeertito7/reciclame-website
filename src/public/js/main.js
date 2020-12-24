@@ -55,6 +55,10 @@ function openLoading(html) {
 	});
 }
 
+function closeLoading() {
+	swal.close();
+}
+
 function successAlert(html) {
 	swal.fire({
 		icon: 'success',
