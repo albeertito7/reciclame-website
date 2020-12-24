@@ -240,3 +240,7 @@ textarea:focus, textarea[type]:focus, input:focus, input[type]:focus {
 .no-scrollbar .k-grid-content {
     overflow-y: visible;
 }
+
+#grid > div.k-pager-wrap.k-grid-pager.k-widget.k-floatwrap > span {
+	margin-right: auto;
+}
