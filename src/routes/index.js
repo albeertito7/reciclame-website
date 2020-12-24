@@ -77,24 +77,24 @@ router.get("/profile", checkCookieMiddleware, (req, res) => {
 			console.log(data);
 			db.collection('userData').get()
 			.then(snapshot => {
-				let totalUsers = 0, adminUsers = 0;
+				/*let totalUsers = 0, adminUsers = 0;
 				snapshot.docs.forEach(user => {
 					if(user.data().isAdmin) {
 						adminUsers++;
 					}
 					totalUsers++;
-				});
+				});*/
 				res.render("profile", {
 					'aud': req.decodedClaims.aud,
 					'uid': uid,
 					'email': req.decodedClaims.email,
 					'emailVerified': req.decodedClaims.email_verified,
 					'fullName': data.fullName,
-					'city': data.city,
-					'postalCode': data.postalCode,
-					'totalUsers': totalUsers,
+					//'city': data.city,
+					//'postalCode': data.postalCode,
+					/*'totalUsers': totalUsers,
 					'adminUsers': adminUsers,
-					'isAdmin': data.isAdmin
+					'isAdmin': data.isAdmin*/
 				});
 			});
 		}
@@ -169,28 +169,46 @@ router.post("/createUserData", (req, res) => {
   console.log("createUserData post");
   console.log(req.body);
 
-  db.collection("userData").doc(req.body.uid).set({
-      avatarRef: "default",
-      city: req.body.city,
-      enable: true,
-      fullName: req.body.fullName,
-      isAdmin: req.body.isAdmin,
-      postalCode: req.body.postalCode,
-      score: 0,
-      uid: req.body.uid
-    })
-    .then(function() {
-      console.log("UserData document correctly set");
-      res.end(JSON.stringify({ status: "success" }));
-    })
-    .catch(function (error) {
-      console.log("Error creating the userData document: " + error);
-      res.status(500).send("Error Ocurred!");
-    });
+	admin
+	.auth()
+	.createUser({
+		email: req.body.email,
+		emailVerified: false,
+		password: req.body.password,
+		emailVerified: req.body.emailVerified,
+		disabled: req.body.disabled
+	})
+	.then((userRecord) => {
+		db.collection("userData").doc(userRecord.uid).set({
+			avatarRef: "default",
+			city: req.body.city,
+			enable: true,
+			fullName: req.body.fullName,
+			isAdmin: req.body.isAdmin,
+			postalCode: req.body.postalCode,
+			score: 0,
+			uid: userRecord.uid
+		  })
+		  .then(function() {
+			console.log("UserData document correctly set");
+			res.end(JSON.stringify({ status: "success" }));
+		  })
+		  .catch(function (error) {
+			console.log("Error creating the userData document: " + error);
+			res.status(500).send("Error Ocurred!");
+		  });
+	})
+	.catch((error) => {
+		console.log("Error creating the userData document: " + error);
+		res.status(500).send("Error Ocurred!");
+	});
+
 });
 
 router.post("/updateCredentials", verifySession, (req, res) => {
 	console.log("updateCredentials post");
+
+	//console.log("Password MD5: " + req.body.password.);
 
 	admin.auth().updateUser(req.decodedClaims.uid, {
 		email: req.body.email,
@@ -213,23 +231,110 @@ router.get("/getUsers", verifySession, function (req, res) {
 
 function listAllUsers (res, result, nextPageToken) {
 	admin
-	  .auth()
-	  .listUsers(1000, nextPageToken)
-	  .then((listUsersResult) => {
-		console.log(listUsersResult.users);
-		result = result.concat(listUsersResult.users);
-		if (listUsersResult.pageToken) {
-		  listAllUsers(res, result, listUsersResult.pageToken);
-		} else {
-			res.status(200).setHeader('Content-Type', 'application/json');
-			res.json(result);
-		}
-	  })
-	  .catch((error) => {
-		console.log('Error listing users:', error);
+		.auth()
+		.listUsers(1000, nextPageToken)
+		.then((listUsersResult) => {
+
+			result = result.concat(listUsersResult.users);
+			if (listUsersResult.pageToken) {
+				listAllUsers(res, result, listUsersResult.pageToken);
+			} else {
+				console.log("Result: " + JSON.stringify(result));
+				res.status(200).setHeader('Content-Type', 'application/json');
+				res.json(result).end();
+			}
+		})
+		.catch((error) => {
+			console.log('Error listing users:', error);
+			res.status(500).send("Error ocurred!");
+		});
+};
+
+router.post("/deleteUser", verifySession, function (req, res) {
+	console.log("/deleteUser");
+
+	admin
+	.auth()
+	.deleteUser(req.body.uid)
+	.then(() => {
+		db.collection("userData").doc(req.body.uid).delete();
+		res.status(200).end();
+	})
+	.catch((err) => {
+		console.log('Error deleting user: ', error);
 		res.status(500).send("Error ocurred!");
-	  });
-  };
+	});
+});
+
+router.post("/accountDetails", verifySession, function (req, res) {
+	console.log("/accountDetails");
+
+	admin
+	.auth()
+	.getUser(req.body.uid)
+	.then((userRecord) => {
+		db.collection('userData').doc(userRecord.uid).get()
+		.then(doc => {
+			if(!doc.empty) {
+				result = {
+					'uid': userRecord.uid,
+					'email': userRecord.email,
+					'emailVerified': userRecord.emailVerified,
+					'fullName': doc.data().fullName,
+					'city': doc.data().city,
+					'postalCode': doc.data().postalCode,
+					'isAdmin': doc.data().isAdmin
+				};
+				console.log("Result: " + JSON.stringify(result));
+				res.status(200).setHeader('Content-Type', 'application/json');
+				res.send(JSON.stringify(result));
+			}
+		})
+		.catch(err => {
+			console.log("Error accountDetails " + err);
+			res.status(500).send("Error ocurred!");
+		});
+	})
+	.catch((error) => {
+		console.log('Error fetching user data:', error);
+	});
+});
+
+router.post("/disabledUser", verifySession, function (req, res) {
+	console.log("/disabledUser");
+
+	admin
+		.auth()
+		.updateUser(req.body.uid, {
+			disabled: req.body.disabled,
+		})
+	.then((userRecord) => {
+		console.log('Successfully updated user', userRecord.toJSON());
+		res.status(200).end();
+	})
+	.catch((error) => {
+		console.log('Error updating user:', error);
+		res.status(500).end();
+	});
+});
+
+router.post("/verifyEmail", verifySession, function (req, res) {
+	console.log("/verifyEmail");
+
+	admin
+		.auth()
+		.updateUser(req.body.uid, {
+			emailVerified: true
+		})
+	.then((userRecord) => {
+		console.log('Successfully updated user', userRecord.toJSON());
+		res.status(200).end();
+	})
+	.catch((error) => {
+		console.log('Error updating user:', error);
+		res.status(500).end();
+	});
+});
 
 function verifySession(req, res, next) {
 	const sessionCookie = req.cookies.session || "";
