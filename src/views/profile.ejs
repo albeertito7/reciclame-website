@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous"></script>
   <script src="/kendo/js/kendo.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 </head>
 <body>
   <%- include('partials/navigation.html') -%>
@@ -30,29 +32,85 @@
           <div style="font-weight: bold; font-size: 18px;"><%= fullName %><%- (!emailVerified) ? "<i class='fa fa-check ml-2' aria-hidden='true'></i>" : "" -%></div>
           <div style="color: grey;">#<%= uid %></div>
           <hr>
-          <div>
+          <div style="display: flex;">
+            <div class="dropdown mr-2">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Account
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item show-profile-details" type="button">Details</a>
+                <a class="dropdown-item" type="button" data-toggle="modal" data-target="#updateCredentialsModal">Update Credentials</a>
+                <a class="dropdown-item" href="/editProfile">Edit Profile</a>
+              </div>
+            </div>
+
+            <div class="dropdown mr-2">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Users
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/createUser">Create User</a>
+                <a id="user-show-data" class="dropdown-item" type="button">Show Data</a>
+              </div>
+            </div>
+
+            <div class="dropdown mr-2">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Containers
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Create Container</a>
+                <a class="dropdown-item show-other-data" type="button">Show Data</a>
+              </div>
+            </div>
+            <div class="dropdown mr-2">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Materials
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Create Material</a>
+                <a class="dropdown-item show-other-data" type="button">Show Data</a>
+              </div>
+            </div>
+            <div class="dropdown mr-2">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Products
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Create Product</a>
+                <a class="dropdown-item show-other-data" type="button">Show Data</a>
+              </div>
+            </div>
+            <div class="dropdown">
+              <button class="btn btn-secondary" onclick="window.location='/sessionLogout';">Log out</button>
+            </div>
+          </div>
+          <!--<div>
             <a class="btn btn-success mr-2" type="button" data-toggle="modal" data-target="#accountDetailsModal">Account details</a>
             <a class="btn btn-danger mr-2" type="button" data-toggle="modal" data-target="#updateCredentialsModal">Update credentials</a>
             <a class="btn btn-primary" href="/editProfile">Edit profile</a>
             <a class="btn btn-primary mr-2" href="/createUser">Create user</a>
             <a class="btn btn-secondary" href="/sessionLogout">Log out</a>
-          </div>
+          </div>-->
         </div>
       </div>
       <hr style="width: 100% !important;">
+      <div id="user-data" style="width: 100%;">
       <div class="row mb-2">
         <div class="col-sm-6" style="display: flex;">
-          <div style="margin-right: 2%;"><span style="font-weight: bold;">Total users: </span> <%= totalUsers %></div>
-          <div><span style="font-weight: bold;">Admin users: </span> <%= adminUsers %></div>
+          <div style="margin-right: 2%;"><span style="font-weight: bold;">Total users: </span><span id="totalUsers_record"></span></div>
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
-          <a id="show_stats" class="btn btn-primary mr-2">Show stats</a>
           <a id="show_records" class="btn btn-primary mr-2">Show records</a>
+          <a id="show_stats" class="btn btn-primary mr-2">Show stats</a>
         </div>
       </div>
-      <div id="stats" class="row" style="display: none;">
-        <div class="col-sm-8">
+      <div id="stats" class="row mt-5" style="display: none;">
+        <div class="col-sm-7 d-flex align-items-center">
           <canvas id="myChart" width="400" height="180"></canvas>
+        </div>
+        <div class="col-sm-5 d-flex align-items-center">
+          <canvas id="myChart2" width="300" height="180"></canvas>
         </div>
       </div>
       <div id="records" class="row">
@@ -60,6 +118,8 @@
           <div id="grid"></div>
         </div>
       </div>
+      </div>
+      <div id="other-data" style="display: none; width: 100%;"></div>
     </section>
   </div>
 </body>
@@ -82,43 +142,43 @@
         <div class="form-group row">
           <label for="uid" class="col-sm-4 col-form-label">User uid</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="uid" disabled value="<%= uid %>" />
+            <input type="text" class="form-control" name="uid" disabled value="" />
           </div>
         </div>
         <div class="form-group row">
           <label for="isAdmin" class="col-sm-4 col-form-label">Role</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="isAdmin" disabled value="<%= (isAdmin) ? 'Administrator' : 'User' %>" />
+            <input type="text" class="form-control" name="isAdmin" disabled value="" />
           </div>
         </div>
         <div class="form-group row">
           <label for="fullnAME" class="col-sm-4 col-form-label">Full name</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="fullName" disabled value="<%= fullName %>" />
+            <input type="text" class="form-control" name="fullName" disabled value="" />
           </div>
         </div>
         <div class="form-group row">
           <label for="email" class="col-sm-4 col-form-label">Account email</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="email" disabled value="<%= email %>" />
+            <input type="text" class="form-control" name="email" disabled value="" />
           </div>
         </div>
         <div class="form-group row">
           <label for="emailVerified" class="col-sm-4 col-form-label">Email verified</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="emailVerified" disabled value="<%= (emailVerified) ? 'verified' : 'need verification' %>" />
+            <input type="text" class="form-control" name="emailVerified" disabled value="" />
           </div>
         </div>
         <div class="form-group row">
           <label for="city" class="col-sm-4 col-form-label">City</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="city" disabled value="<%= city %>" />
+            <input type="text" class="form-control" name="city" disabled value="" />
           </div>
         </div>
         <div class="form-group row">
           <label for="postalCode" class="col-sm-4 col-form-label">Postal code</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="postalCode" disabled value="<%= postalCode %>" />
+            <input type="text" class="form-control" name="postalCode" disabled value="" />
           </div>
         </div>
       </div>
@@ -167,7 +227,38 @@
 
 <script>
   var dataSource;
+  var myChart, myChart2;
   $(document).ready(function () {
+
+    $(".show-profile-details").click(function () {
+      openLoading("<h4>Loading details ...</h4>");
+
+      fetch("/accountDetails", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+        },
+        body: JSON.stringify({
+          uid: "<%= uid %>"
+        })
+      })
+      .then(response => response.json())
+      .then((response) => {
+        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(2) > div > input").val(response.uid);
+        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(4) > div > input").val(response.fullName);
+        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(5) > div > input").val(response.email);
+        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(7) > div > input").val(response.city);
+        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(8) > div > input").val(response.postalCode);
+        (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > input").val('Administrator') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > input").val('User');
+        (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > input").val('verified') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > input").val('need verification');
+        
+        closeLoading();
+        $('#accountDetailsModal').modal('show');
+      })
+    });
+
     dataSource = new kendo.data.DataSource({
         transport: {
             read: {
@@ -177,28 +268,49 @@
         },
         schema: {
                 model: {
-                    id: "uid",
                     fields: {
-                        email: { type: "string" },
+                        uid_firebase: {
+                          field: 'uid',
+                          type: "string", 
+                          parse: function (response) {
+                            return response;
+                          } 
+                        },
                         emailVerified: { type: "bit" },
+                        disabled: { type: "bit" },
                         displayName: { type: "string" },
                         metadata: { defaultValue: {} },
                         creationTime: {
-                          type: "date",
-                          from: "metadata.creationTime"
+                          field: "metadata.creationTime",
+                          parse: function (response) {
+                            return new Date(response);
+                          }
                         },
                         lastSignInTime: {
-                          type: "date",
-                          from: "metadata.lastSignInTime"
-                        },
-                        lastRefreshTime: {
-                          type: "date",
-                          from: "metadata.lastRefreshTime"
+                          from: "metadata.lastSignInTime",
+                          parse: function (response) {
+                            return new Date(response);
+                          }
                         }
                     }
                 }
             },
         pageSize: 20,
+        requestEnd: function (e) {
+          if (e.type === "read" && e.response) {
+            if (e.response.length > 0) {
+              $("#totalUsers_record").html(e.response.length);
+            } else {
+              swal({
+                  icon: 'warning',
+                  title: 'No results',
+                  type: "warning",
+                  confirmButtonClass: "btn-warning",
+                  confirmButtonText: "OK"
+              });
+            }
+          }
+        }
     });
 
     function toggleScrollbar(e) {
@@ -208,38 +320,9 @@
 
     $("#grid").kendoGrid({
       toolbar: [
-            { text: "Export to PDF", className: "k-grid-pdf toolbar-style", id: "pdf" },
-            { text: "Export to Excel", className: "k-grid-excel toolbar-style", id: "excel" }
-        ],
-      excel: {
-          fileName: "Reciclame_Export.xlsx",
-          allPages: !0
-      },
-      excelExport: function(e){
-          var sheet = e.workbook.sheets[0];
-          var data = dataSource.data();
-          var gridColumns = $("#grid").data("kendoGrid").columns;
-          var columns = gridColumns.map(function(col){
-              return {
-                  value: col.title ? col.title : col.field,
-                  autoWidth: !0,
-                  background: "#7a7a7a",
-                  color: "#fff"
-              };
-          });
-
-          var rows = [{cells:columns, type: "header"}];
-
-          for (var i = 0; i < data.length; i++){
-              var rowCells = [];
-              for(var j=0;j < gridColumns.length;j++){
-                  var cellValue = data[i][gridColumns[j].field];
-                  rowCells.push({value: cellValue});
-              }
-              rows.push({cells: rowCells, type: "data"});
-          }
-          sheet.rows = rows;
-      },
+          { text: "Export to PDF", className: "k-grid-pdf toolbar-style", id: "pdf" },
+          { text: "Export to Excel", className: "k-grid-excel toolbar-style", id: "excel" }
+      ],
       pdf: {
           fileName: "Reciclame_Export.pdf",
           allPages: !0,
@@ -273,31 +356,158 @@
         this.autoFitColumn(2);
         this.autoFitColumn(3);
         this.autoFitColumn(4);
+        this.autoFitColumn(5);
         toggleScrollbar(e);
+
+        $(".show-account-details").click(function () {
+          
+          openLoading("<h4>Loading details ...</h4>");
+
+          fetch("/accountDetails", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+            },
+            body: JSON.stringify({
+              uid: $(this).data('uid')
+            })
+          })
+          .then(response => response.json())
+          .then((response) => {
+            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(2) > div > input").val(response.uid);
+            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(4) > div > input").val(response.fullName);
+            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(5) > div > input").val(response.email);
+            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(7) > div > input").val(response.city);
+            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(8) > div > input").val(response.postalCode);
+            (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > input").val('Administrator') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > input").val('User');
+            (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > input").val('verified') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > input").val('need verification');
+            
+            closeLoading();
+            $('#accountDetailsModal').modal('show');
+          })
+        });
+
+        $(".delete-user").click(function () {
+          swal.fire({
+            icon: "warning",
+            showConfirmButton: true,
+            showCancelButton: true,
+            html: '<h4>Are you sure?</h4>',
+            confirmButtonText: 'Yes, I am sure!',
+            cancelButtonText: "No, cancel it!",
+          }).then((result) => {
+            if(result.isConfirmed) {
+              openLoading("<h4>Deleting user ...</h4>");
+              fetch("/deleteUser", {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                  "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                },
+                body: JSON.stringify({
+                  uid: $(this).data('uid')
+                })
+              })
+              .then(() => {
+                $("#grid").data("kendoGrid").dataSource.read();
+                closeLoading();
+                successAlert('<h4>User deleted successfully</h4>')
+              })
+              .catch((error) => {
+                errorAlert('<h4>Something wrong ocurred</h4><h6>' + error.message + '</h6>');
+              });
+            }
+          });
+        });
+
+        $(".disabled-firebase").click(function () {
+          let disabled = $(this).data("disabled");
+          if(disabled) {
+            openLoading("<h4>Enabling user ...</h4>");
+          } else {
+            openLoading("<h4>Disabling user ...</h4>");
+          }
+          fetch("/disabledUser", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+            },
+            body: JSON.stringify({
+              disabled: !disabled,
+              uid: $(this).data('uid')
+            })
+          })
+          .then(() => {
+            closeLoading();
+            successAlert('<h4>User updated successfully</h4>')
+            $("#grid").data("kendoGrid").dataSource.read();
+          })
+          .catch((error) => {
+            errorAlert('<h4>Something wrong ocurred</h4><h6>' + error.message + '</h6>');
+          });
+        });
+
+        $(".verify-firebase").click(function () {
+
+          openLoading("<h4>Verifying user ...</h4>");
+          fetch("/verifyEmail", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+            },
+            body: JSON.stringify({
+              uid: $(this).data('uid')
+            })
+          })
+          .then(() => {
+            closeLoading();
+            successAlert('<h4>User verified successfully</h4>')
+            $("#grid").data("kendoGrid").dataSource.read();
+          })
+          .catch((error) => {
+            errorAlert('<h4>Something wrong ocurred</h4><h6>' + error.message + '</h6>');
+          });
+        });
       },
       columns: [
         {
-          field: "uid",
-          title: "uid"
+          field: "uid_firebase",
+          title: "UID"
         },
         {
           field: "email",
-          title: "email"
+          title: "Email"
         },
         {
           field: "emailVerified",
-          title: "emailVerified",
+          title: "Email verified",
           template: "#if(emailVerified) {# <i class='fas fa-check'></i>#} else {#<i class='fas fa-times'></i>#}#"
         },
         {
-          field: "metadata.creationTime",
-          title: "CreationTime",
+          field: "disabled",
+          title: "Enabled",
+          template: "#if(!disabled) {# <i class='fas fa-check'></i>#} else {#<i class='fas fa-times'></i>#}#"
+        },
+        {
+          field: "creationTime",
+          title: "Creation time",
+          format: "{0:dd/MM/yyyy - HH:mm}"
+        },
+        {
+          field: "lastSignInTime",
+          title: "LastSignIn time",
           format: "{0:dd/MM/yyyy - HH:mm}",
         },
         {
-          field: "metadata.lastSignInTime",
-          title: "LastSignInTime",
-          format: "{0:dd/MM/yyyy - HH:mm}",
+          title: "Actions",
+          template: "<button class='btn btn-info show-account-details mr-2' data-uid='#= uid_firebase#'>Details</button>#if(!emailVerified) {# <button class='btn btn-info verify-firebase mr-2' data-uid='#= uid_firebase#'>Verify</button> #}##if(disabled) {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#'>Enable</button>#} else {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#'>Disable</button> #}#<a class='btn btn-danger delete-user' type='button' data-uid='#= uid_firebase#'>Delete</a>"
         }
       ]
     });
@@ -330,8 +540,8 @@
               },
               body: JSON.stringify({
                   'email': email,
-                  'password': CryptoJS.MD5(password),
-                  'confirmPassword': CryptoJS.MD5(passwordConfirm)
+                  'password': password, //CryptoJS.MD5(password),
+                  'confirmPassword': confirmPassword //CryptoJS.MD5(confirmPassword)
               }),
             })
             .then(() => {
@@ -349,46 +559,100 @@
           }
     });
 
+    $("#user-show-data").click(function () {
+      $("#other-data").hide();
+      $("#user-data").show();
+    });
+
+    $(".show-other-data").click(function() {
+      $("#user-data").hide();
+      $("#other-data").show();
+    });
+
     $("#show_stats").click(function () {
       $("#records").hide();
       $("#stats").show();
       var ctx = document.getElementById('myChart');
+      var ctx2 = document.getElementById('myChart2');
+      var timeFormat = 'DD/MM/YYYY';
+
+      if(myChart != undefined) {
+        myChart.destroy();
+      }
+
       var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [{
+            label: "Creation Time",
+            fill: false,
+            borderColor: 'rgba(54, 162, 235, 1)',
+            data: dataSource.data().map(function (e) { return { x: new Date(e.creationTime), y: Math.floor(Math.random() * 10) + 1} }),
+          },
+          {
+            label: "LastSignIn Time",
+            fill: false,
+            borderColor: 'rgb(0,128,0, 0.2)',
+            data: dataSource.data().map(function (e) { return { x: new Date(e.creationTime), y: Math.floor(Math.random() * 10) + 1} }),
+          }
+        ]
+        },
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+            text: 'Application Users Time Scale'
+          }
+        }
+      });
+
+      if(myChart2 != undefined) {
+        myChart2.destroy();
+      }
+
+      myChart2 = new Chart(ctx2, {
           type: 'bar',
           data: {
-              labels: ['Total users', 'Users', 'Administrators'],
+              labels: ['Total users', "Verified users", "Enabled users", "Disabled users"],
               datasets: [{
-                  labels: ['# of Total users', '# of Users', '# of Administrators'],
-                  data: [<%= totalUsers %>, <%= totalUsers - adminUsers %>, <%= adminUsers %>],
+                  labels: ['# of Total users', '# of Verified users', '# of Enabled users', '# of Disabled users'],
+                  data: [
+                    dataSource.data().length,
+                    dataSource.data().filter(obj => obj.emailVerified == true).length,
+                    dataSource.data().filter(obj => obj.disabled == false).length,
+                    dataSource.data().filter(obj => obj.disabled == true).length,
+                  ],
                   backgroundColor: [
-                      'rgba(2, 179, 40, 0.2)',
                       'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)'
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgb(0,128,0, 0.2)',
+                      'rgb(255,0,0, 0.2)'
                   ],
                   borderColor: [
-                      'rgba(2, 179, 40, 1)', // green
                       'rgba(54, 162, 235, 1)', // blue
-                      'rgba(255, 206, 86, 1)' // yellow
+                      'rgba(255, 206, 86, 1)', // yellow
+                      'rgb(0,128,0, 0.2)',
+                      'rgb(255,0,0, 0.2)'
                   ],
                   borderWidth: 1
-              }]
+              }],
           },
           options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero: true
-                      }
-                  }]
-              },
-              title: {
-                display: true,
-                text: 'Application users'
-              },
-              legend: {
-                display: false
-              }
-          }
+            title: {
+              display: true,
+              text: 'Application users'
+            },
+            legend: {
+              display: false
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+              }]
+            }
+        }
       });
     });
 
