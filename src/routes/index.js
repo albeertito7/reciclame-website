@@ -1,12 +1,23 @@
 const { Router }= require('express');
 const router = Router();
 const admin = require("firebase-admin");
-const serviceAccount = require("../../serviceAccountKey.json");
+//const serviceAccount = require("../../serviceAccountKey.json");
 const firestore = require("firebase/firestore");
 
 /* connection string */
 admin.initializeApp({
- credential: admin.credential.cert(serviceAccount), /* admin.credential.applicationDefault() */
+ credential: admin.credential.cert({
+	"type": "service_account",
+	"project_id": "reciclame-app-b1f20",
+	"private_key_id": process.env.FIREBASE_PRIVATE_KEY_ID,
+	"private_key": process.env.FIREBASE_PRIVATE_KEY,
+	"client_email": process.env.FIREBASE_CLIENT_EMAIL,
+	"client_id": process.env.FIREBASE_CLIENT_ID,
+	"auth_uri": process.env.FIREBASE_AUTH_URI,
+	"token_uri": process.env.FIREBASE_TOKEN_URI,
+	"auth_provider_x509_cert_url": process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
+	"client_x509_cert_url": process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL
+ }), /* admin.credential.applicationDefault() */
  databaseURL: "https://reciclame-app-b1f20.firebaseio.com"
 });
 
