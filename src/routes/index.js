@@ -6,7 +6,7 @@ const firestore = require("firebase/firestore");
 
 /* connection string */
 admin.initializeApp({
- credential: admin.credential.cert(JSON.parse(new Buffer(process.env.FIREBASE_APP_CREDENTIALS, 'base64'))), /* admin.credential.applicationDefault() 
+ credential: admin.credential.cert(JSON.parse(new Buffer(process.env.FIREBASE_APP_CREDENTIALS, 'base64'))), /* admin.credential.applicationDefault() */
  databaseURL: "https://reciclame-app-b1f20.firebaseio.com"
 });
 
