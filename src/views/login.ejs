@@ -71,8 +71,8 @@
                       method: "POST",
                       headers: {
                         Accept: "application/json",
-                        "Content-Type": "application/json",
-                        "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                        "Content-Type": "application/json"
+                        //"CSRF-Token": Cookies.get("XSRF-TOKEN"),
                       },
                       body: JSON.stringify({ idToken }),
                     });

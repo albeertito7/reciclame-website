@@ -23,7 +23,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(csrfMiddleware);
+//app.use(csrfMiddleware);
 /*app.use('/:local', (req, res, next) => {
     console.log(req.params.local);
 
