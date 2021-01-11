@@ -1,12 +1,13 @@
 const { Router }= require('express');
 const router = Router();
 const admin = require("firebase-admin");
-//const serviceAccount = require("../../serviceAccountKey.json");
-const firestore = require("firebase/firestore");
+const ga = require('google-analyticsreporting');
+const serviceAccountKey = JSON.parse(Buffer.from(process.env.FIREBASE_APP_CREDENTIALS, 'base64'));
+//const firestore = require("firebase/firestore");
 
 /* connection string */
 admin.initializeApp({
- credential: admin.credential.cert(JSON.parse(Buffer.from(process.env.FIREBASE_APP_CREDENTIALS, 'base64'))), /* admin.credential.applicationDefault() */
+ credential: admin.credential.cert(serviceAccountKey), /* admin.credential.applicationDefault() */
  databaseURL: "https://reciclame-app-b1f20.firebaseio.com"
 });
 
@@ -368,6 +369,50 @@ function checkCookieMiddleware(req, res, next) {
 			res.render('login');
 		})
 }
+
+
+router.get("/analytics", (req, res) => {
+	const reportRequests = {
+		reportRequests:
+			[
+			{
+				viewId: '<YOUR VIEW ID HERE>',
+				dateRanges:
+				[
+					{
+					endDate: '2018-01-18',
+					startDate: '2018-01-18',
+					},
+				],
+				metrics:
+				[
+					{
+					expression: 'ga:dcmCost',
+					},
+					{
+					expression: 'ga:dcmClicks',
+					},
+					{
+					expression: 'ga:dcmImpressions',
+					},
+				],
+				dimensions:
+				[
+					{
+					name: 'ga:dcmLastEventCampaign',
+					},
+				],
+			},
+		],
+	};
+
+	ga.auth(serviceAccountKey).then(
+		ga.query(reportRequests).then(function(error,results) {
+			var csv = ga.makecsv(error,results);
+			console.log(csv);
+		})
+	);
+});
 
 /*router.post('/contact', (req, res) => {
 	console.log("Contact");
