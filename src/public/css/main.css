@@ -52,7 +52,7 @@ h1 {
 }
 
 .lift-up:hover {
-	transform: scale(1.1) !important;
+	transform: scale(1.05) !important;
 }
 
 .custom-select {
@@ -160,13 +160,13 @@ textarea:focus, textarea[type]:focus, input:focus, input[type]:focus {
 	height: auto;
 	width: auto;
     background-color: #FFF;
-    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
     background-position: left;
     overflow: hidden;
     position: relative;
     cursor: pointer;
 	border-radius: 20px;
 	border: 5px solid white;
+	-webkit-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4);
 }
 
 .profile-card-2 img {
@@ -207,7 +207,7 @@ textarea:focus, textarea[type]:focus, input:focus, input[type]:focus {
 }
 
 .profile-card-2:hover img {
-    filter: grayscale(100%);
+	filter: grayscale(60%);
 }
 
 .profile-card-2:hover .profile-name {
@@ -243,4 +243,44 @@ textarea:focus, textarea[type]:focus, input:focus, input[type]:focus {
 
 #grid > div.k-pager-wrap.k-grid-pager.k-widget.k-floatwrap > span {
 	margin-right: auto;
+}
+
+.k-grid td {
+	padding: 10px 10px !important;
+}
+
+
+@media(max-width: 750px) {
+	.rotate-panel {
+		padding: 75px !important;
+	}
+}
+
+@media(max-width: 650px) {
+	.rotate-panel {
+		padding: 65px !important;
+		overflow: hidden !important;
+	}
+}
+
+@media(max-width: 600px) {
+	.rotate-panel {
+		padding: 55px !important;
+		overflow: hidden !important;
+	}
+}
+
+
+@media(max-width: 550px) {
+	.rotate-panel {
+		padding: 50px 40px !important;
+		overflow: hidden !important;
+	}
+}
+
+@media(max-width: 450px) {
+	.rotate-panel {
+		padding: 40px 30px !important;
+		overflow: hidden !important;
+	}
 }

@@ -1,8 +1,8 @@
 const { Router }= require('express');
 const router = Router();
 const admin = require("firebase-admin");
-const ga = require('google-analyticsreporting');
-const serviceAccountKey = JSON.parse(Buffer.from(process.env.FIREBASE_APP_CREDENTIALS, 'base64'));
+const {AlphaAnalyticsDataClient} = require('@google-analytics/data');
+const serviceAccountKey = JSON.parse(Buffer.from(process.env.FIREBASE_APP_CREDENTIALS, 'base64')); //require("../../serviceAccountKey.json");
 //const firestore = require("firebase/firestore");
 
 /* connection string */
@@ -12,6 +12,9 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
+
+const projectId = 'reciclame-app-b1f20';
+const client = new AlphaAnalyticsDataClient({keyFilename: "serviceAccountKey.json"});
 
 router.get('/', (req, res) => {
 	res.render('index', { title: 'Reciclame' });
@@ -372,46 +375,45 @@ function checkCookieMiddleware(req, res, next) {
 
 
 router.get("/analytics", (req, res) => {
-	const reportRequests = {
-		reportRequests:
-			[
-			{
-				viewId: '<YOUR VIEW ID HERE>',
-				dateRanges:
-				[
-					{
-					endDate: '2018-01-18',
-					startDate: '2018-01-18',
-					},
-				],
-				metrics:
-				[
-					{
-					expression: 'ga:dcmCost',
-					},
-					{
-					expression: 'ga:dcmClicks',
-					},
-					{
-					expression: 'ga:dcmImpressions',
-					},
-				],
-				dimensions:
-				[
-					{
-					name: 'ga:dcmLastEventCampaign',
-					},
-				],
-			},
-		],
-	};
+	console.log("get analytics");
 
-	ga.auth(serviceAccountKey).then(
-		ga.query(reportRequests).then(function(error,results) {
-			var csv = ga.makecsv(error,results);
-			console.log(csv);
-		})
-	);
+	const propertyId = 252994745;
+
+	async function runReport() {
+		const [response] = await client.runReport({
+		  entity: {
+			propertyId: propertyId, //project reciclame-app-b1f20 propertyId
+		  },
+		  dateRanges: [
+			{
+			  startDate: '2020-03-31',
+			  endDate: 'today',
+			},
+		  ],
+		  dimensions: [
+			{
+			  name: 'city',
+			},
+		  ],
+		  metrics: [
+			{
+			  name: 'activeUsers',
+			},
+		  ],
+		});
+	  
+		console.log('Report result:');
+		response.rows.forEach(row => {
+		  console.log(row.dimensionValues[0], row.metricValues[0]);
+		});
+	  }
+	  
+	  runReport().then(function() {
+		res.status(200).end();
+	  }).catch(err => {
+		console.log("Error analytics data: " + err);
+		res.status(500).end();
+	  });	  
 });
 
 /*router.post('/contact', (req, res) => {

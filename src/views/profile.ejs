@@ -32,66 +32,59 @@
           <div style="font-weight: bold; font-size: 18px;"><%= fullName %><%- (!emailVerified) ? "<i class='fa fa-check ml-2' aria-hidden='true'></i>" : "" -%></div>
           <div style="color: grey;">#<%= uid %></div>
           <hr>
-          <div style="display: flex;">
-            <div class="dropdown mr-2">
+          <div>
+            <div class="dropdown mr-2" style="display: inline-block;">
               <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Account
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item show-profile-details" type="button">Details</a>
-                <a class="dropdown-item" type="button" data-toggle="modal" data-target="#updateCredentialsModal">Update Credentials</a>
-                <a class="dropdown-item" href="/editProfile">Edit Profile</a>
+                <a class="dropdown-item show-profile-details" type="button"><i class="fas fa-info-circle mr-2"></i>Details</a>
+                <a class="dropdown-item" type="button" data-toggle="modal" data-target="#updateCredentialsModal"><i class="fas fa-edit mr-2"></i> Update Credentials</a>
+                <a class="dropdown-item" href="/editProfile"><i class="fas fa-user-edit mr-2"></i>Edit Profile</a>
               </div>
             </div>
 
-            <div class="dropdown mr-2">
+            <div class="dropdown mr-2" style="display: inline-block;">
               <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Users
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/createUser">Create User</a>
-                <a id="user-show-data" class="dropdown-item" type="button">Show Data</a>
+                <a class="dropdown-item" href="/createUser"><i class="fas fa-plus mr-2"></i>Create User</a>
+                <a id="user-show-data" class="dropdown-item" type="button"><i class="fas fa-database mr-2"></i>Show Data</a>
               </div>
             </div>
 
-            <div class="dropdown mr-2">
+            <div class="dropdown mr-2" style="display: inline-block;">
               <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Containers
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Create Container</a>
-                <a class="dropdown-item show-other-data" type="button">Show Data</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-plus mr-2"></i>Create Container</a>
+                <a class="dropdown-item show-other-data" type="button"><i class="fas fa-database mr-2"></i>Show Data</a>
               </div>
             </div>
-            <div class="dropdown mr-2">
+            <div class="dropdown mr-2" style="display: inline-block;">
               <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Materials
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Create Material</a>
-                <a class="dropdown-item show-other-data" type="button">Show Data</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-plus mr-2"></i>Create Material</a>
+                <a class="dropdown-item show-other-data" type="button"><i class="fas fa-database mr-2"></i>Show Data</a>
               </div>
             </div>
-            <div class="dropdown mr-2">
+            <div class="dropdown mr-2" style="display: inline-block;">
               <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Products
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Create Product</a>
-                <a class="dropdown-item show-other-data" type="button">Show Data</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-plus mr-2"></i>Create Product</a>
+                <a class="dropdown-item show-other-data" type="button"><i class="fas fa-database mr-2"></i>Show Data</a>
               </div>
             </div>
-            <div class="dropdown">
-              <button class="btn btn-secondary" onclick="window.location='/sessionLogout';">Log out</button>
+            <div class="dropdown" style="display: inline-block;">
+              <button class="btn btn-secondary" onclick="window.location='/sessionLogout';">Log out</i></button>
             </div>
           </div>
-          <!--<div>
-            <a class="btn btn-success mr-2" type="button" data-toggle="modal" data-target="#accountDetailsModal">Account details</a>
-            <a class="btn btn-danger mr-2" type="button" data-toggle="modal" data-target="#updateCredentialsModal">Update credentials</a>
-            <a class="btn btn-primary" href="/editProfile">Edit profile</a>
-            <a class="btn btn-primary mr-2" href="/createUser">Create user</a>
-            <a class="btn btn-secondary" href="/sessionLogout">Log out</a>
-          </div>-->
         </div>
       </div>
       <hr style="width: 100% !important;">
@@ -101,8 +94,8 @@
           <div style="margin-right: 2%;"><span style="font-weight: bold;">Total users: </span><span id="totalUsers_record"></span></div>
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
-          <a id="show_records" class="btn btn-primary mr-2">Show records</a>
-          <a id="show_stats" class="btn btn-primary mr-2">Show stats</a>
+          <a id="show_records" class="btn btn-primary mr-2" title="Show records"><i class="fas fa-table"></i></a>
+          <a id="show_stats" class="btn btn-primary mr-2" title="Show charts"><i class="fas fa-chart-bar"></i></a>
         </div>
       </div>
       <div id="stats" class="row mt-5" style="display: none;">
@@ -238,7 +231,7 @@
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+          //"CSRF-Token": Cookies.get("XSRF-TOKEN"),
         },
         body: JSON.stringify({
           uid: "<%= uid %>"
@@ -320,8 +313,8 @@
 
     $("#grid").kendoGrid({
       toolbar: [
-          { text: "Export to PDF", className: "k-grid-pdf toolbar-style", id: "pdf" },
-          { text: "Export to Excel", className: "k-grid-excel toolbar-style", id: "excel" }
+          { text: "<i class='far fa-file-pdf' title='Export to pdf'></i>", className: "k-grid-pdf toolbar-style", id: "pdf" },
+          { text: "<i class='far fa-file-excel' title='Export to excel'></i>", className: "k-grid-excel toolbar-style", id: "excel" }
       ],
       pdf: {
           fileName: "Reciclame_Export.pdf",
@@ -405,7 +398,7 @@
                 headers: {
                   Accept: "application/json",
                   "Content-Type": "application/json",
-                  "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                  //"CSRF-Token": Cookies.get("XSRF-TOKEN"),
                 },
                 body: JSON.stringify({
                   uid: $(this).data('uid')
@@ -435,7 +428,7 @@
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+              //"CSRF-Token": Cookies.get("XSRF-TOKEN"),
             },
             body: JSON.stringify({
               disabled: !disabled,
@@ -507,7 +500,7 @@
         },
         {
           title: "Actions",
-          template: "<button class='btn btn-info show-account-details mr-2' data-uid='#= uid_firebase#'>Details</button>#if(!emailVerified) {# <button class='btn btn-info verify-firebase mr-2' data-uid='#= uid_firebase#'>Verify</button> #}##if(disabled) {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#'>Enable</button>#} else {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#'>Disable</button> #}#<a class='btn btn-danger delete-user' type='button' data-uid='#= uid_firebase#'>Delete</a>"
+          template: "<button class='btn btn-info show-account-details mr-2' data-uid='#= uid_firebase#' title='User details'><i class='fas fa-info-circle'></i></button>#if(!emailVerified) {# <button class='btn btn-info verify-firebase mr-2' data-uid='#= uid_firebase#' title='Verify user'><i class='fas fa-user-check'></i></button> #}##if(disabled) {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#' title='Enable user'><i class='fas fa-toggle-off'></i></button>#} else {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#' title='Disable user'><i class='fas fa-toggle-on'></i></button> #}#<a class='btn btn-danger delete-user' type='button' data-uid='#= uid_firebase#' title='Delete user'><i class='far fa-trash-alt'></i></a>"
         }
       ]
     });

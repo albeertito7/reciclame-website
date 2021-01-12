@@ -16,9 +16,9 @@
   </head>
   <body>
     <%- include('partials/navigation.html') -%>
-    <main>
-      <section class="mt-5">
-        <form id="login-form" style="max-width: 500px; width: 80%;">
+    <div class="container-fluid">
+      <section class="my-sm-5 my-4">
+        <form id="login-form" style="max-width: 500px; width: 100%;">
           <div class="form-group row">
             <label for="email" class="col-sm-4 col-form-label">Email</label>
             <div class="col-sm-8">
@@ -31,13 +31,19 @@
               <input type="password" class="form-control" name="password" placeholder="Enter your password" />
             </div>
           </div>
-          <button class="pt-3 pb-3" style="float: right;">Log in</button>
+          <div class="row mb-2 justify-content-end" style="font-size: 14px;">
+            <div class="col text-right">
+              <a type="button" data-toggle="modal" data-target="#passwordRecovery">Forgot your password?</a></div>
+            </div>
+            <div class="row justify-content-end">
+              <button class="pt-3 pb-3 lift-up" style="outline: none; border-radius: 100px; border: 3px solid #01802b; background-color: #02b328;">Log in</button>
+            </div>
         </form>
       </section>
 
       <script>
         window.addEventListener("DOMContentLoaded", () => {
-          console.log("asdfasfd");
+
           const firebaseConfig = {
             apiKey: "AIzaSyBIbw7wtKNLRWAUtY4EoTD9ySRjvvUpTeg",
             authDomain: "reciclame-app-b1f20.firebaseapp.com",
@@ -72,7 +78,7 @@
                       headers: {
                         Accept: "application/json",
                         "Content-Type": "application/json"
-                        //"CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                        //"CSRF-Token": Cookies.get("XSRF-TOKEN"), //for cross-site security
                       },
                       body: JSON.stringify({ idToken }),
                     });
@@ -90,8 +96,59 @@
                 });;
               return false;
             });
+
+      document
+      .getElementById("recover-password-form")
+      .addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        openLoading("<h4>Sending ...</h4>");
+
+        const email = event.target.email.value;
+        const auth = firebase.auth();
+
+        auth.sendPasswordResetEmail(email).then(function() {
+          closeLoading();
+          successAlert('<h4>Email sent successfully</h4>');
+        }).catch(function(error) {
+          console.log("Error recover password: " + error);
+          errorAlert('<h4>Something went wrong</h4><h6>' + error.message + '</h6>');
+        });
+    });
+
         });
       </script>
-    </main>
+    </div>
   </body>
+  <div class="modal fade" id="passwordRecovery" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Recover your password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="recover-password-form" style="padding: 0px; box-shadow: none; border: none;">
+            <div class="form-group row">
+                <input type="text" class="form-control" name="email" value="" placeholder="Enter your email"/>
+            </div>
+            <button class="btn text-white" style="float: right; border-radius: 100px; border: 3px solid #01802b; background-color: #02b328;">Send</a>
+          </form>
+        </div>
+        <div class="modal-footer">
+          If your email exists in the database, you will received an email to recover your password
+        </div>
+      </div>
+    </div>
+  </div>
 </html>
+<!--<style>
+  canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container ---- */ #particles-js{ position:absolute; width: 100%; height: 100%; background-color: transparent; background-image: url(""); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%; }
+</style>-->
+<script>
+  /*$(document).ready(function () {
+      particlesJS("particles-js", {"particles":{"number":{"value":50,"density":{"enable":true,"value_area":800}},"color":{"value":"#02b328"},"shape":{"type":"circle","stroke":{"width":0,"color":"#02b328"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.9,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.9,"sync":false}},"size":{"value":5,"random":true,"anim":{"enable":false,"speed":40,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#02b328","opacity":0.8,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":false,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
+  });*/
+</script>

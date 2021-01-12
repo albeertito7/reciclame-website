@@ -6,29 +6,15 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title><%= title %></title>
 	<%- include('partials/head.html') -%>
-	<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIbw7wtKNLRWAUtY4EoTD9ySRjvvUpTeg&callback=initMap&libraries=&v=weekly"defer></script>
-	<script>
-		function initMap() {
-        // The location of Uluru
-			const uluru = { lat: -25.344, lng: 131.036 };
-			// The map, centered at Uluru
-			const map = new google.maps.Map(document.getElementById("map"), {
-			zoom: 4,
-			center: uluru,
-			});
-			// The marker, positioned at Uluru
-			const marker = new google.maps.Marker({
-				position: uluru,
-				map: map,
-			});
-      	}
-	</script>-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+	<!--<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>-->
 </head>
 <body>
 	<%- include('partials/navigation.html') -%>
-	<div style="background: url('img/contact-background.jpg'); background-size: cover; position: relative; padding-top: 60px; padding-bottom: 150px;">
-		<div class="container" data-aos="fade-down" data-aos-duration="800" style="max-width: 900px; position: relative; z-index: 1;">
-			<section class="p-md-5 px-3 py-5" style="background-color: white; border-radius: 50px; -webkit-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4);">
+	<div style="/*background: url('img/contact-background.jpg'); background-size: cover;*/ position: relative; /*padding-top: 60px;*/ padding-bottom: 150px;">
+		<div id="particles-js" style="overflow: hidden; position: absolute; height: 100%; width: 100%;"></div>
+		<div class="container" data-aos="fade-down" data-aos-duration="800" style="padding-top: 60px; max-width: 900px; position: relative; z-index: 1;">
+			<section class="p-md-5 px-4 py-5" style="background-color: white; border-radius: 50px; -webkit-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4);">
 				<h2 class="h1-responsive font-weight-bold text-center mb-4">We need your feedback</h2>
 				<p class="col text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within a matter of hours to help you. We really appreciate your feedback.</p>
 				<div class="row justify-content-center align-items-center">
@@ -81,8 +67,8 @@
 				</div>
 			</section>
 		</div>
-		<div class="row text-center justify-content-center align-content-end p-md-5 px-3 pb-4" style="font-size: 30px; color: white; background-color: black; height: 350px; position: absolute; bottom: 0px; width: 100%;">
-			Conntect with us via social networks
+		<div class="row text-center justify-content-center align-content-end p-sm-5 px-3 pb-4" style="font-size: 28px; color: white; background-color: black; height: 350px; position: absolute; bottom: 0px; width: 100%;">
+			Connect with us via social networks
 		</div>
 	</div>
 	<div id="map" style="margin-bottom: -10px;">
@@ -91,3 +77,48 @@
 </body>
 <%- include('partials/footer.html') -%>
 </html>
+<style>
+	.dot{
+  width:35px;
+  height:35px;
+  position: absolute;
+  background: url(http://www.clipartqueen.com/image-files/red-lobed-fall-clipart-leaf.png);
+  background-size: 100% 100%;
+}
+#particles-js {width:100%; height:100%; }
+</style>
+<script>
+	$(document).ready(function () {
+		//particlesJS("particles-js", {"particles":{"number":{"value":150,"density":{"enable":true,"value_area":800}},"color":{"value":"#02b328"},"shape":{"type":"circle","stroke":{"width":0,"color":"#02b328"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.5,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#02b328","opacity":0.4,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":false,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
+		/* a Pen by Diaco m.lotfollahi  : https://diacodesign.com */
+var falling = true;
+
+TweenLite.set("#particles-js",{perspective:500})
+//TweenLite.set("img.dot",{xPercent:"-50%",yPercent:"-50%"})
+
+var total = 80;
+var container = document.getElementById("particles-js"),	w = window.innerWidth , h = window.innerHeight;
+ 
+ for (i=0; i<total; i++){ 
+   var Div = document.createElement('div');
+   TweenLite.set(Div,{attr:{class:'dot'},x:R(0,w),y:R(-200,-150),z:R(-200,200)});
+   container.appendChild(Div);
+   animm(Div);
+ }
+ 
+ function animm(elm){   
+   TweenMax.to(elm,R(6,15),{y:h+100,ease:Linear.easeNone,repeat:-1,delay:-15});
+   TweenMax.to(elm,R(4,8),{x:'+=100',rotationZ:R(0,180),repeat:-1,yoyo:true,ease:Sine.easeInOut});
+   TweenMax.to(elm,R(2,8),{rotationX:R(0,360),rotationY:R(0,360),repeat:-1,yoyo:true,ease:Sine.easeInOut,delay:-5});
+ };
+
+function R(min,max) {return min+Math.random()*(max-min)};
+
+
+
+
+
+
+/* a Pen by Diaco m.lotfollahi  : https://diacodesign.com */
+	});
+</script>
