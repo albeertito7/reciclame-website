@@ -364,7 +364,7 @@ router.post('/contact', (req, res) => {
 	const smtpTrans = nodemailer.createTransport({
 		host: process.env.MAIL_SERVER, //server
 		port: 587,
-		secure: false,
+		secure: true,
 		auth: {
 			user: process.env.MAIL_SERVER_USER, //email
 			pass: Buffer.from(process.env.MAIL_SERVER_PASSWORD, 'base64') //password
