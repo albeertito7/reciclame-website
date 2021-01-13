@@ -155,7 +155,7 @@ router.post("/createUserData", (req, res) => {
 		.auth()
 		.createUser({
 			email: req.body.email,
-			emailVerified: false,
+			emailVerified: req.body.emailVerified,
 			password: req.body.password,
 			emailVerified: req.body.emailVerified,
 			disabled: req.body.disabled
@@ -173,16 +173,16 @@ router.post("/createUserData", (req, res) => {
 			})
 			.then(function() {
 				console.log("/createUserData: User data document correctly set");
-				res.end(JSON.stringify({ status: "success" }));
+				res.status(200).end();
 			})
 			.catch(function (error) {
 				console.log("/createUserData: Error creating the user data document: " + error);
-				res.status(500).send("Error creating user data document!");
+				res.status(500).send("Error creating user data document!").end();
 			});
 		})
 		.catch((error) => {
-			console.log("Error creating user: " + error);
-			res.status(500).send("Error creating user!");
+			console.log("/createUserData: Error creating user: " + error);
+			res.status(500).send("Error creating user!").end();
 		});
 
 });
@@ -306,18 +306,12 @@ router.post("/deleteUser", verifySession, function (req, res) {
 	admin
 		.auth()
 		.deleteUser(req.body.uid)
-		.then((userRecord) => {
-			db.collection("userData").doc(req.body.uid).delete()
-				.then(() => {
-					console.log('/deleteUser: User deleted successfully', userRecord.toJSON());
-					res.status(200).end();
-				})
-				.catch(() => {
-					console.log('/deleteUser: Error deleting user: ', error);
-					res.status(500).send("Error deleting user from userData collection!");
-				});
+		.then(() => {
+			db.collection("userData").doc(req.body.uid).delete();
+			console.log('/deleteUser: User deleted successfully');
+			res.status(200).end();
 		})
-		.catch((err) => {
+		.catch((error) => {
 			console.log('/deleteUser: Error deleting user: ', error);
 			res.status(500).send("Error ocurred!");
 		});
