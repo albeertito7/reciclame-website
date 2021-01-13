@@ -346,3 +346,7 @@ nav.navbar.sticky-top {
 div.swal2-content > div.sweet_loader > svg > g.circle > path {
 	stroke: #02b328 !important;
 }
+
+.swal2-confirm.swal2-styled {
+	background-color: #02b328 !important;
+}
