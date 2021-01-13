@@ -6,18 +6,16 @@
   <title>Profile page</title>
   <%- include('partials/head.html') -%>
   <link rel="stylesheet" href="/css/mvp.css" />
-  <!--<link rel="stylesheet" href="/kendo/kendo.default.mobile.min.css"></link>-->
   <link rel="stylesheet" href="/kendo/styles/kendo.material.min.css"></link>
   <link rel="stylesheet" href="/kendo/styles/kendo.common-material.min.css"></link>
   <link rel="stylesheet" href="/kendo/styles/kendo.bootstrap.min.css"></link>
-  <!--<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>-->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous"></script>
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous"></script>-->
   <script src="/kendo/js/kendo.all.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
 </head>
 <body>
@@ -129,49 +127,49 @@
         <div class="form-group row">
           <label for="aud" class="col-sm-4 col-form-label">App</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="aud" disabled value="<%= aud %>" />
+            <div class="form-control" name="aud"><%= aud %>"</div>
           </div>
         </div>
         <div class="form-group row">
           <label for="uid" class="col-sm-4 col-form-label">User uid</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="uid" disabled value="" />
+            <div class="form-control" name="uid"></div>
           </div>
         </div>
         <div class="form-group row">
           <label for="isAdmin" class="col-sm-4 col-form-label">Role</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="isAdmin" disabled value="" />
+            <div class="form-control" name="isAdmin"></div>
           </div>
         </div>
         <div class="form-group row">
           <label for="fullnAME" class="col-sm-4 col-form-label">Full name</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="fullName" disabled value="" />
+            <div class="form-control" name="fullName"></div>
           </div>
         </div>
         <div class="form-group row">
           <label for="email" class="col-sm-4 col-form-label">Account email</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="email" disabled value="" />
+            <div class="form-control" name="email"></div>
           </div>
         </div>
         <div class="form-group row">
           <label for="emailVerified" class="col-sm-4 col-form-label">Email verified</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="emailVerified" disabled value="" />
+            <div class="form-control" name="emailVerified"></div>
           </div>
         </div>
         <div class="form-group row">
           <label for="city" class="col-sm-4 col-form-label">City</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="city" disabled value="" />
+            <div class="form-control" name="city"></div>
           </div>
         </div>
         <div class="form-group row">
           <label for="postalCode" class="col-sm-4 col-form-label">Postal code</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" name="postalCode" disabled value="" />
+            <div class="form-control" name="postalCode"></div>
           </div>
         </div>
       </div>
@@ -239,13 +237,13 @@
       })
       .then(response => response.json())
       .then((response) => {
-        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(2) > div > input").val(response.uid);
-        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(4) > div > input").val(response.fullName);
-        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(5) > div > input").val(response.email);
-        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(7) > div > input").val(response.city);
-        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(8) > div > input").val(response.postalCode);
-        (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > input").val('Administrator') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > input").val('User');
-        (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > input").val('verified') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > input").val('need verification');
+        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(2) > div > div").text(response.uid);
+        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(4) > div > div").text(response.fullName);
+        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(5) > div > div").text(response.email);
+        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(7) > div > div").text(response.city);
+        $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(8) > div > div").text(response.postalCode);
+        (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > div").text('Administrator') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > div").text('User');
+        (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > input").text('verified') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > div").text('need verification');
         
         closeLoading();
         $('#accountDetailsModal').modal('show');
@@ -370,13 +368,13 @@
           })
           .then(response => response.json())
           .then((response) => {
-            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(2) > div > input").val(response.uid);
-            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(4) > div > input").val(response.fullName);
-            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(5) > div > input").val(response.email);
-            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(7) > div > input").val(response.city);
-            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(8) > div > input").val(response.postalCode);
-            (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > input").val('Administrator') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > input").val('User');
-            (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > input").val('verified') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > input").val('need verification');
+            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(2) > div > div").text(response.uid);
+            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(4) > div > div").text(response.fullName);
+            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(5) > div > div").text(response.email);
+            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(7) > div > div").text(response.city);
+            $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(8) > div > div").text(response.postalCode);
+            (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > div").text('Administrator') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(3) > div > div").text('User');
+            (response.isAdmin) ? $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > div").text('verified') : $("#accountDetailsModal > div > div > div.modal-body > div:nth-child(6) > div > div").text('need verification');
             
             closeLoading();
             $('#accountDetailsModal').modal('show');
@@ -454,7 +452,7 @@
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+              //"CSRF-Token": Cookies.get("XSRF-TOKEN"),
             },
             body: JSON.stringify({
               uid: $(this).data('uid')
