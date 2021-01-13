@@ -366,8 +366,8 @@ router.post('/contact', (req, res) => {
 		port: 587,
 		secure: false,
 		auth: {
-		user: process.env.MAIL_SERVER_USER, //email
-		pass: process.env.MAIL_SERVER_PASSWORD //password
+			user: process.env.MAIL_SERVER_USER, //email
+			pass: process.env.MAIL_SERVER_PASSWORD //password
 		}
 	})
 
@@ -382,10 +382,11 @@ router.post('/contact', (req, res) => {
 	// attempt to send the email
 	smtpTrans.sendMail(mailOpts, (error, response) => {
 		if (error) {
-		res.render('contactError', { title: 'Contact Error' }) // show a page indicating failure
+			console.log("Contact error: " + error);
+			res.render('contactError', { title: 'Contact Error' }) // show a page indicating failure
 		}
 		else {
-		res.render('contactSuccess', { title: 'Contact Success' }) // show a page indicating success
+			res.render('contactSuccess', { title: 'Contact Success' }) // show a page indicating success
 		}
 	})
 })
