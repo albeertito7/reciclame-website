@@ -1,5 +1,6 @@
 const app = require('./app');
 
+// adding to all server requests csrf security
 /*app.all("*", (req, res, next) => {
   res.cookie("XSRF-TOKEN", req.csrfToken());
   next();
