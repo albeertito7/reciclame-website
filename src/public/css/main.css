@@ -284,3 +284,22 @@ textarea:focus, textarea[type]:focus, input:focus, input[type]:focus {
 		overflow: hidden !important;
 	}
 }
+
+/* Navigation styles */
+nav.navbar.sticky-top {
+	background-color: #02b328 !important;
+	border-bottom: 4px solid #01802b;
+}
+
+.navbar-brand {
+	font-family: 'Pattaya' !important;
+}
+
+.navbar-brand > img {
+	max-width: 40px;
+	margin-right: 15px;
+}
+
+#admin-btn {
+	border: 3px solid white; border-radius: 50px;
+}
