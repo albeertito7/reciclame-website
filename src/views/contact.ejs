@@ -89,36 +89,26 @@
 </style>
 <script>
 	$(document).ready(function () {
-		//particlesJS("particles-js", {"particles":{"number":{"value":150,"density":{"enable":true,"value_area":800}},"color":{"value":"#02b328"},"shape":{"type":"circle","stroke":{"width":0,"color":"#02b328"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.5,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#02b328","opacity":0.4,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":false,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
-		/* a Pen by Diaco m.lotfollahi  : https://diacodesign.com */
-var falling = true;
+		var falling = true;
 
-TweenLite.set("#particles-js",{perspective:500})
-//TweenLite.set("img.dot",{xPercent:"-50%",yPercent:"-50%"})
+		TweenLite.set("#particles-js",{perspective:600})
+		TweenLite.set("img.dot",{xPercent:"-50%",yPercent:"-50%"})
 
-var total = 80;
-var container = document.getElementById("particles-js"),	w = window.innerWidth , h = window.innerHeight;
- 
- for (i=0; i<total; i++){ 
-   var Div = document.createElement('div');
-   TweenLite.set(Div,{attr:{class:'dot'},x:R(0,w),y:R(-200,-150),z:R(-200,200)});
-   container.appendChild(Div);
-   animm(Div);
- }
- 
- function animm(elm){   
-   TweenMax.to(elm,R(6,15),{y:h+100,ease:Linear.easeNone,repeat:-1,delay:-15});
-   TweenMax.to(elm,R(4,8),{x:'+=100',rotationZ:R(0,180),repeat:-1,yoyo:true,ease:Sine.easeInOut});
-   TweenMax.to(elm,R(2,8),{rotationX:R(0,360),rotationY:R(0,360),repeat:-1,yoyo:true,ease:Sine.easeInOut,delay:-5});
- };
+		var total = 80, container = document.getElementById("particles-js"),	w = window.innerWidth , h = window.innerHeight;
+		
+		for (i=0; i<total; i++){ 
+			var Div = document.createElement('div');
+			TweenLite.set(Div,{attr:{class:'dot'},x:R(0,w),y:R(-200,-150),z:R(-200,200)});
+			container.appendChild(Div);
+			animm(Div);
+		}
+		
+		function animm(elm){   
+			TweenMax.to(elm,R(6,15),{y:h+100,ease:Linear.easeNone,repeat:-1,delay:-15});
+			TweenMax.to(elm,R(4,8),{x:'+=100',rotationZ:R(0,180),repeat:-1,yoyo:true,ease:Sine.easeInOut});
+			TweenMax.to(elm,R(2,8),{rotationX:R(0,360),rotationY:R(0,360),repeat:-1,yoyo:true,ease:Sine.easeInOut,delay:-5});
+		};
 
-function R(min,max) {return min+Math.random()*(max-min)};
-
-
-
-
-
-
-/* a Pen by Diaco m.lotfollahi  : https://diacodesign.com */
+		function R(min,max) {return min+Math.random()*(max-min)};
 	});
 </script>
