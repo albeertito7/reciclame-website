@@ -3,7 +3,7 @@ const router = Router();
 const nodemailer = require('nodemailer');
 const admin = require("firebase-admin");
 const {AlphaAnalyticsDataClient} = require('@google-analytics/data');
-const serviceAccountKey = JSON.parse(Buffer.from(process.env.FIREBASE_APP_CREDENTIALS, 'base64')); //require("../../serviceAccountKey.json");
+const serviceAccountKey = JSON.parse(Buffer.from(process.env.FIREBASE_APP_CREDENTIALS, 'base64')); // require("../../serviceAccountKey.json");
 
 /* connection string */
 admin.initializeApp({
@@ -367,7 +367,7 @@ router.post('/contact', (req, res) => {
 		secure: false,
 		auth: {
 			user: process.env.MAIL_SERVER_USER, //email
-			pass: process.env.MAIL_SERVER_PASSWORD //password
+			pass: Buffer.from(process.env.MAIL_SERVER_PASSWORD, 'base64') //password
 		}
 	})
 
