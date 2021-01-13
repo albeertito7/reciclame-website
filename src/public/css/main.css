@@ -317,3 +317,32 @@ nav.navbar.sticky-top {
 	background-color: #02b328;
 	outline: none;
 }
+
+.btn-reciclame-2 {
+	border-radius: 5px !important;
+	color: white !important;
+	background-color: #02b328 !important;
+	outline: none;
+}
+
+.btn-reciclame-2:hover {
+	color: white !important;
+}
+
+.k-link.k-state-selected {
+	background-color: #02b328 !important;
+    border-color: #01802b !important;
+}
+
+.k-list>.k-state-selected.k-state-focused {
+	background-color: #02b328 !important;
+	color: white !important;
+}
+
+.k-state-focused.k-state-selected {
+	box-shadow: inset 0 0 10px 3px #01802b !important;
+}
+
+div.swal2-content > div.sweet_loader > svg > g.circle > path {
+	stroke: #02b328 !important;
+}
