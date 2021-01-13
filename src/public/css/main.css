@@ -303,3 +303,9 @@ nav.navbar.sticky-top {
 #admin-btn {
 	border: 3px solid white; border-radius: 50px;
 }
+
+/* Footer styles */
+#footer-logo {
+	width: 100%;
+	max-width: 350px;
+}
