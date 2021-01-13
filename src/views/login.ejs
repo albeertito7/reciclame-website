@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Firebase Server Auth</title>
+    <title>Login page</title>
     <%- include('partials/head.html') -%>
     <link rel="stylesheet" href="/css/mvp.css" />
     <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js" defer></script>
@@ -12,13 +12,14 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+    <!--<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>-->
   </head>
   <body>
     <%- include('partials/navigation.html') -%>
+    <!--<div id="particles-js" style="width: 100%; height: 80%; position: absolute; z-index:-1;"></div>-->
     <div class="container-fluid">
       <section class="my-sm-5 my-4">
-        <form id="login-form" style="max-width: 500px; width: 100%;">
+        <form id="login-form" style="max-width: 500px; width: 100%; background-color: white;">
           <div class="form-group row">
             <label for="email" class="col-sm-4 col-form-label">Email</label>
             <div class="col-sm-8">
@@ -42,7 +43,7 @@
       </section>
 
       <script>
-        window.addEventListener("DOMContentLoaded", () => {
+        $(document).ready(() => {
 
           const firebaseConfig = {
             apiKey: "AIzaSyBIbw7wtKNLRWAUtY4EoTD9ySRjvvUpTeg",
@@ -59,9 +60,7 @@
           //firebase.analytics(); // config analytics firebase
           firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
-          document
-            .getElementById("login-form")
-            .addEventListener("submit", (event) => {
+          $("#login-form").submit(event => {
               event.preventDefault();
               openLoading("<h4>Logging in ...</h4>");
 
@@ -87,36 +86,32 @@
                   return firebase.auth().signOut();
                 })
                 .then(() => {
-                  console.log("window.location.assign /profile");
                   window.location.assign("/profile");
                 })
                 .catch(error => {
-                  console.log(error);
+                  console.log("Error signInWithEmailAndPassword: " + error);
                   errorAlert('<h4>Something went wrong</h4><h6>' + error.message + '</h6>');
-                  $("#login-form").get(0).reset();
-                });;
+                });
               return false;
             });
 
-      document
-      .getElementById("recover-password-form")
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
+            $("#recover-password-form").submit(event => {
+              event.preventDefault();
 
-        openLoading("<h4>Sending ...</h4>");
+              openLoading("<h4>Sending ...</h4>");
 
-        const email = event.target.email.value;
-        const auth = firebase.auth();
+              const email = event.target.email.value,
+                    auth = firebase.auth();
 
-        auth.sendPasswordResetEmail(email).then(function() {
-          closeLoading();
-          successAlert('<h4>Email sent successfully</h4>');
-        }).catch(function(error) {
-          console.log("Error recover password: " + error);
-          errorAlert('<h4>Something went wrong</h4><h6>' + error.message + '</h6>');
-        });
-    });
-
+              auth.sendPasswordResetEmail(email).then(function() {
+                $("#passwordRecovery").modal("hide");
+                closeLoading();
+                successAlert('<h4>Email sent successfully</h4>');
+              }).catch(function(error) {
+                console.log("Error recover password: " + error);
+                errorAlert('<h4>Something went wrong</h4><h6>' + error.message + '</h6>');
+              });
+          });
         });
       </script>
     </div>
@@ -135,11 +130,8 @@
             <div class="form-group row">
                 <input type="text" class="form-control" name="email" value="" placeholder="Enter your email"/>
             </div>
-            <button class="btn text-white" style="float: right; border-radius: 100px; border: 3px solid #01802b; background-color: #02b328;">Send</a>
+            <button class="btn btn-reciclame float-right text-white">Send</a>
           </form>
-        </div>
-        <div class="modal-footer">
-          If your email exists in the database, you will received an email to recover your password
         </div>
       </div>
     </div>
@@ -147,9 +139,9 @@
 </html>
 <!--<style>
   canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container ---- */ #particles-js{ position:absolute; width: 100%; height: 100%; background-color: transparent; background-image: url(""); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%; }
-</style>-->
+</style>
 <script>
-  /*$(document).ready(function () {
-      particlesJS("particles-js", {"particles":{"number":{"value":50,"density":{"enable":true,"value_area":800}},"color":{"value":"#02b328"},"shape":{"type":"circle","stroke":{"width":0,"color":"#02b328"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.9,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.9,"sync":false}},"size":{"value":5,"random":true,"anim":{"enable":false,"speed":40,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#02b328","opacity":0.8,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":false,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
-  });*/
-</script>
+  $(document).ready(function () {
+      particlesJS("particles-js", {"particles":{"number":{"value":30,"density":{"enable":true,"value_area":800}},"color":{"value":"#02b328"},"shape":{"type":"circle","stroke":{"width":0,"color":"#02b328"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.9,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.9,"sync":false}},"size":{"value":5,"random":true,"anim":{"enable":false,"speed":40,"size_min":1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#02b328","opacity":0.8,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":false,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
+  });
+</script>-->
