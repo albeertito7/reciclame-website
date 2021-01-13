@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Firebase Server Auth</title>
+    <title>Edit profile page</title>
     <%- include('partials/head.html') -%>
     <link rel="stylesheet" href="/css/mvp.css" />
     <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js" defer></script>
@@ -35,29 +35,13 @@
               <input type="text" class="form-control" name="postalCode" placeholder="Enter your postal code" value="<%= postalCode %>" />
             </div>
           </div>
-          <button class="pt-3 pb-3" style="float: right;">Save</button>
+          <button class="pt-3 pb-3 btn-reciclame float-right lift-up">Save</button>
         </form>
       </section>
 
       <script>
-        window.addEventListener("DOMContentLoaded", () => {
-          const firebaseConfig = {
-              apiKey: "AIzaSyBIbw7wtKNLRWAUtY4EoTD9ySRjvvUpTeg",
-              authDomain: "reciclame-app-b1f20.firebaseapp.com",
-              databaseURL: "https://reciclame-app-b1f20.firebaseio.com",
-              projectId: "reciclame-app-b1f20",
-              storageBucket: "reciclame-app-b1f20.appspot.com",
-              messagingSenderId: "293535846004",
-              appId: "1:293535846004:web:7b350c83eb76b6e3f30b21d",
-              measurementID: "G-2ZQQ9E2M3X"
-            };
-
-          firebase.initializeApp(firebaseConfig);
-          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-
-          document
-            .getElementById("edit-form")
-            .addEventListener("submit", (event) => {
+        $(document).ready(() => {
+          $("#edit-form").submit(event => {
               event.preventDefault();
 
               openLoading("<h4>Saving the data ...</h4>");
@@ -65,20 +49,16 @@
               const city = event.target.city.value,
                 postalCode = event.target.postalCode.value,
                 fullName = event.target.fullName.value;
-                //email = event.target.email.value;
-
-                console.log(firebase.auth().uid);
 
                 fetch("/saveUserData", {
                     method: "POST",
                     headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                      Accept: "application/json",
+                      "Content-Type": "application/json",
+                      //"CSRF-Token": Cookies.get("XSRF-TOKEN"),
                     },
                     body: JSON.stringify({
                         'fullName': fullName,
-                        //'email': email,
                         'city': city,
                         'postalCode': postalCode
                     }),
@@ -88,7 +68,7 @@
                   window.location.assign('/profile');
                 })
                 .catch(error => {
-                  console.log(error);
+                  console.log("Error saving user data: " + error);
                   errorAlert('<h4>Something wrong ocurred</h4><h6>' + error.message + '</h6>');
                 });
               return false;
