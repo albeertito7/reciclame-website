@@ -3,16 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Firebase Server Auth</title>
+    <title>Create user page</title>
     <%- include('partials/head.html') -%>
     <link rel="stylesheet" href="/css/mvp.css" />
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js" defer></script>
-    <!--<script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js" defer></script>-->
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous"></script>-->
   </head>
   <body>
     <%- include('partials/navigation.html') -%>
@@ -28,7 +24,7 @@
           <div class="form-group row">
             <label for="email" class="col-sm-4 col-form-label">Email</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" name="email" placeholder="Enter your email" required/>
+              <input type="email" class="form-control" name="email" placeholder="Enter your email" required/>
             </div>
           </div>
           <div class="form-group row">
@@ -46,7 +42,7 @@
           <div class="form-group row">
             <label for="postalCode" class="col-sm-4 col-form-label">Postal code</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" name="postalCode" placeholder="Enter your postal code" required/>
+              <input type="numeric" class="form-control" name="postalCode" placeholder="Enter your postal code" required/>
             </div>
           </div>
           <div class="form-group row">
@@ -63,16 +59,13 @@
                 <input type="checkbox" name="isAdmin" id="checkbox">
               </div>
           </div>
-          <button class="pt-3 pb-3" style="float: right;">Sign up</button>
+          <button class="pt-3 pb-3 btn-reciclame float-right lift-up">Sign up</button>
         </form>
       </section>
 
       <script>
-        window.addEventListener("DOMContentLoaded", () => {
-          
-          document
-            .getElementById("signup-form")
-            .addEventListener("submit", (event) => {
+        $(document).ready(() => {
+          $("#signup-form").submit(event => {
               event.preventDefault();
 
               openLoading("<h4>Creating a new user account ...</h4>");
@@ -91,7 +84,7 @@
                   headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
-                    "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                    //"CSRF-Token": Cookies.get("XSRF-TOKEN"),
                   },
                   body: JSON.stringify({
                     'email': email,
@@ -104,12 +97,16 @@
                     'disabled': !isDisabled
                   }),
                 })
-                .then(() => {
-                  successAlert('<h4>User created successfully</h4>');
-                  window.location.assign('/profile');
+                .then((response) => {
+                  console.log(response);
+                  if(response.ok) {
+                    successAlert('<h4>User created successfully</h4>');
+                    window.location.assign('/profile');
+                  } else {
+                    throw new Error(response.message);
+                  }
                 })
-                .catch(error => {
-                  console.log(error);
+                .catch((error) => {
                   errorAlert('<h4>Something wrong ocurred</h4><h6>' + error.message + '</h6>');
                 });
             });
