@@ -32,7 +32,7 @@
           <hr>
           <div>
             <div class="dropdown mr-2" style="display: inline-block;">
-              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-reciclame-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Account
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -43,7 +43,7 @@
             </div>
 
             <div class="dropdown mr-2" style="display: inline-block;">
-              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-reciclame-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Users
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -53,7 +53,7 @@
             </div>
 
             <div class="dropdown mr-2" style="display: inline-block;">
-              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-reciclame-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Containers
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -62,7 +62,7 @@
               </div>
             </div>
             <div class="dropdown mr-2" style="display: inline-block;">
-              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-reciclame-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Materials
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -71,7 +71,7 @@
               </div>
             </div>
             <div class="dropdown mr-2" style="display: inline-block;">
-              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-reciclame-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Products
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -92,8 +92,8 @@
           <div style="margin-right: 2%;"><span style="font-weight: bold;">Total users: </span><span id="totalUsers_record"></span></div>
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
-          <a id="show_records" class="btn btn-primary mr-2" title="Show records"><i class="fas fa-table"></i></a>
-          <a id="show_stats" class="btn btn-primary mr-2" title="Show charts"><i class="fas fa-chart-bar"></i></a>
+          <a id="show_records" class="btn btn-reciclame-2 mr-2" title="Show records"><i class="fas fa-table"></i></a>
+          <a id="show_stats" class="btn btn-reciclame-2 mr-2" title="Show charts"><i class="fas fa-chart-bar"></i></a>
         </div>
       </div>
       <div id="stats" class="row mt-5" style="display: none;">
@@ -312,8 +312,8 @@
 
     $("#grid").kendoGrid({
       toolbar: [
-          { text: "<i class='far fa-file-pdf' title='Export to pdf'></i>", className: "k-grid-pdf toolbar-style", id: "pdf" },
-          { text: "<i class='far fa-file-excel' title='Export to excel'></i>", className: "k-grid-excel toolbar-style", id: "excel" }
+          { text: "<i class='far fa-file-pdf' title='Export to pdf'></i>", className: "k-grid-pdf toolbar-style btn-reciclame-2", id: "pdf" },
+          { text: "<i class='far fa-file-excel' title='Export to excel'></i>", className: "k-grid-excel toolbar-style btn-reciclame-2", id: "excel" }
       ],
       pdf: {
           fileName: "Reciclame_Export.pdf",
@@ -499,7 +499,7 @@
         },
         {
           title: "Actions",
-          template: "<button class='btn btn-info show-account-details mr-2' data-uid='#= uid_firebase#' title='User details'><i class='fas fa-info-circle'></i></button>#if(!emailVerified) {# <button class='btn btn-info verify-firebase mr-2' data-uid='#= uid_firebase#' title='Verify user'><i class='fas fa-user-check'></i></button> #}##if(disabled) {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#' title='Enable user'><i class='fas fa-toggle-off'></i></button>#} else {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#' title='Disable user'><i class='fas fa-toggle-on'></i></button> #}#<a class='btn btn-danger delete-user' type='button' data-uid='#= uid_firebase#' title='Delete user'><i class='far fa-trash-alt'></i></a>"
+          template: "<button class='btn btn-primary show-account-details mr-2' data-uid='#= uid_firebase#' title='User details'><i class='fas fa-info-circle'></i></button>#if(!emailVerified) {# <button class='btn btn-info verify-firebase mr-2' data-uid='#= uid_firebase#' title='Verify user'><i class='fas fa-user-check'></i></button> #}##if(disabled) {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#' title='Enable user'><i class='fas fa-toggle-off'></i></button>#} else {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#' title='Disable user'><i class='fas fa-toggle-on'></i></button> #}#<a class='btn btn-danger delete-user' type='button' data-uid='#= uid_firebase#' title='Delete user'><i class='far fa-trash-alt'></i></a>"
         }
       ]
     });
