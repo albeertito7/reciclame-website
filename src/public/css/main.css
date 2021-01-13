@@ -288,7 +288,7 @@ textarea:focus, textarea[type]:focus, input:focus, input[type]:focus {
 /* Navigation styles */
 nav.navbar.sticky-top {
 	background-color: #02b328 !important;
-	border-bottom: 4px solid #01802b;
+	border-bottom: 3px solid #01802b;
 }
 
 .navbar-brand {
