@@ -1,3 +1,4 @@
+// main js code to implement a session storage front-end based string translation
 $.getJSON('lang.json', function (json) {
 
 	if(!localStorage.getItem('lang')) {
