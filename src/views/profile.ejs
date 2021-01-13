@@ -351,8 +351,7 @@
         this.autoFitColumn(5);
         toggleScrollbar(e);
 
-        $(".show-account-details").click(function () {
-          
+        $(".show-account-details").click(function () { 
           openLoading("<h4>Loading details ...</h4>");
 
           fetch("/accountDetails", {
@@ -499,6 +498,7 @@
         },
         {
           title: "Actions",
+          width: 200,
           template: "<button class='btn btn-primary show-account-details mr-2' data-uid='#= uid_firebase#' title='User details'><i class='fas fa-info-circle'></i></button>#if(!emailVerified) {# <button class='btn btn-info verify-firebase mr-2' data-uid='#= uid_firebase#' title='Verify user'><i class='fas fa-user-check'></i></button> #}##if(disabled) {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#' title='Enable user'><i class='fas fa-toggle-off'></i></button>#} else {# <button class='btn btn-warning disabled-firebase mr-2' data-disabled='#= disabled#'  data-uid='#= uid_firebase#' title='Disable user'><i class='fas fa-toggle-on'></i></button> #}#<a class='btn btn-danger delete-user' type='button' data-uid='#= uid_firebase#' title='Delete user'><i class='far fa-trash-alt'></i></a>"
         }
       ]
@@ -630,6 +630,7 @@
               }],
           },
           options: {
+            responsive: true,
             title: {
               display: true,
               text: 'Application users'
