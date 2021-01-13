@@ -7,14 +7,13 @@
 	<title><%= title %></title>
 	<%- include('partials/head.html') -%>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
-	<!--<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>-->
 </head>
 <body>
 	<%- include('partials/navigation.html') -%>
 	<div style="/*background: url('img/contact-background.jpg'); background-size: cover;*/ position: relative; /*padding-top: 60px;*/ padding-bottom: 150px;">
-		<div id="particles-js" style="overflow: hidden; position: absolute; height: 100%; width: 100%;"></div>
+		<div id="leafs-js" style="overflow: hidden; position: absolute; height: 100%; width: 100%;"></div>
 		<div class="container" data-aos="fade-down" data-aos-duration="800" style="padding-top: 60px; max-width: 900px; position: relative; z-index: 1;">
-			<section class="p-md-5 px-4 py-5" style="background-color: white; border-radius: 50px; -webkit-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4);">
+			<section class="p-md-5 px-sm-4 px-3 py-5" style="background-color: white; border-radius: 50px; -webkit-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4); box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.4);">
 				<h2 class="h1-responsive font-weight-bold text-center mb-4">We need your feedback</h2>
 				<p class="col text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within a matter of hours to help you. We really appreciate your feedback.</p>
 				<div class="row justify-content-center align-items-center">
@@ -79,22 +78,25 @@
 </html>
 <style>
 	.dot{
-  width:35px;
-  height:35px;
-  position: absolute;
-  background: url(http://www.clipartqueen.com/image-files/red-lobed-fall-clipart-leaf.png);
-  background-size: 100% 100%;
-}
-#particles-js {width:100%; height:100%; }
+		width:35px;
+		height:35px;
+		position: absolute;
+		background: url(http://www.clipartqueen.com/image-files/red-lobed-fall-clipart-leaf.png);
+		background-size: 100% 100%;
+	}
+	#leafs-js {
+		width:100%;
+		height:100%;
+	}
 </style>
 <script>
 	$(document).ready(function () {
 		var falling = true;
 
-		TweenLite.set("#particles-js",{perspective:600})
+		TweenLite.set("#leafs-js",{perspective:600})
 		TweenLite.set("img.dot",{xPercent:"-50%",yPercent:"-50%"})
 
-		var total = 80, container = document.getElementById("particles-js"),	w = window.innerWidth , h = window.innerHeight;
+		var total = 80, container = document.getElementById("leafs-js"),	w = window.innerWidth , h = window.innerHeight;
 		
 		for (i=0; i<total; i++){ 
 			var Div = document.createElement('div');
