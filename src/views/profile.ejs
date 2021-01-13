@@ -82,7 +82,7 @@
               </div>
             </div>
             <div class="dropdown" style="display: inline-block;">
-              <button class="btn btn-secondary" onclick="window.location='/sessionLogout';">Log out</i></button>
+              <button class="btn btn-secondary" onclick="window.location='/logout';">Log out</i></button>
             </div>
           </div>
         </div>
@@ -255,6 +255,7 @@
     dataSource = new kendo.data.DataSource({
         transport: {
             read: {
+              type: "post",
               url: "/getUsers",
               dataType: "json"
             }
@@ -361,7 +362,7 @@
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+              //"CSRF-Token": Cookies.get("XSRF-TOKEN"),
             },
             body: JSON.stringify({
               uid: $(this).data('uid')
@@ -529,7 +530,7 @@
               headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
-                "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                //"CSRF-Token": Cookies.get("XSRF-TOKEN"),
               },
               body: JSON.stringify({
                   'email': email,
