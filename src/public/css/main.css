@@ -171,7 +171,7 @@ textarea:focus, textarea[type]:focus, input:focus, input[type]:focus {
 
 .profile-card-2 img {
 	transition: all linear 0.25s;
-	filter: brightness(1.5);
+	filter: brightness(1.2);
 }
 
 .profile-card-2 .profile-name {
