@@ -41,13 +41,13 @@ Also, if you need to update `npm`, you can make it using `npm`! Cool right? Afte
 
 ## Running the project
 
-    For development, as it is used `nodemon`, apply:
+For development, as it is used `nodemon`, apply:
 
-        $ npm dev
+    $ npm dev
 
-    otherwise:
+otherwise:
 
-        $ npm start
+    $ npm start
 
 ### Simple build for production
 
