@@ -52,3 +52,13 @@ otherwise:
 ### Simple build for production
 
     $ npm build
+    
+## Docker
+
+To make the installation even easier, just run
+
+    $ docker-compose up
+
+in this way you will use the original environment
+
+> Note: remember to install [docker desktop](https://www.docker.com/products/docker-desktop)
