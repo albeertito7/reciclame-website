@@ -16,7 +16,7 @@ You may also use Yarn if preferred.
     Just go on  [oficcial Node.js website](https://nodejs.org) and download the installer.
     Also, be sure to have `git`available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com))
 
-    > Note: On MacOS you may also prefer to use `brew` by running `$ brew instal node`
+    > Note: On MacOS you may also prefer to use `brew` by running `$ brew install node`
 
 - #### Node installation on Ubuntu
 
