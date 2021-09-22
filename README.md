@@ -1,42 +1,46 @@
 # Reciclame NodeJs WebSite
 Web projecte developed and designed to have an administration part for the Reciclame Flutter App (https://github.com/danielb05/reciclame)
 
-# Deployed
+## Deployed
 The website is deployed using heroku, thus u can find the Procfile.<br/>
 <a href="https://reciclame-udl.herokuapp.com" target="_blank">reciclame-udl.herokuapp.com</a>
 
 ## Requirements
 
-For development, you will only need Node.js and npm, installed in your environment.
+For development, you will only need Node.js and npm, installed in your environment.<br/>
 You may also use Yarn if preferred.
 
-### Node
-- #### Node installation on Windows/MacOS
+## Running the project
 
-    Just go on  [oficcial Node.js website](https://nodejs.org) and download the installer.
-    Also, be sure to have `git`available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com))
+- ### Using Docker
 
-    > Note: On MacOS you may also prefer to use `brew` by running `$ brew install node`
+- ### Locally
+    - #### Node
+        - ##### Node installation on Windows/MacOS
 
-- #### Node installation on Ubuntu
+            Just go on  [oficcial Node.js website](https://nodejs.org) and download the installer.
+            Also, be sure to have `git`available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com))
 
-    Easy. Just run:
+            > Note: On MacOS you may also prefer to use `brew` by running `$ brew install node`
 
-        $ sudo apt install nodejs
-        $ sudo apt install npm
+        - ##### Node installation on Ubuntu
 
-- #### Other
+            Easy. Just run:
 
-    There is more information about the installtion on the [official Node.js website](https://nodejs.org/) and the [oficcial NPM website](https://npmjs.org).
+                $ sudo apt install nodejs
+                $ sudo apt install npm
+
+        - ##### Other
+
+            There is more information about the installtion on the [official Node.js website](https://nodejs.org/) and the [oficcial NPM website](https://npmjs.org).
 
 
-If the installation was successful, you should be abel to run 
+        If the installation was successful, you should be abel to run 
 
-    $ node --version
-    $ npm --version
+            $ node --version
+            $ npm --version
 
-Also, if you need to update `npm`, you can make it using `npm`! Cool right? After running the following command, just open again the command line and be happy.
+        Also, if you need to update `npm`, you can make it using `npm`! Cool right? After running the following command, just open again the command line and be happy.
 
-    $ npm install -g npm
+            $ npm install -g npm
 
----
