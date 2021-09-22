@@ -52,10 +52,10 @@ otherwise:
 ### Simple build for production
 
     $ npm build
-    
+
 ## Docker
 
-To make the installation even easier, just run
+To make the installation even easier, skipping the previous points,  just run
 
     $ docker-compose up
 
