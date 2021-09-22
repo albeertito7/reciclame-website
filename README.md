@@ -1,9 +1,9 @@
-# Reciclame NodeJs WebSite,
-Developed and designed to have an admin part for the Reciclame Flutter App (https://github.com/danielb05/reciclame)
+# Reciclame NodeJs WebSite
+Web projecte developed and designed to have an administration part for the Reciclame Flutter App (https://github.com/danielb05/reciclame)
 
 # Deployed
-The website is deployed using heroku, thus u can find the Procfile<br/>
-link: <a href="https://reciclame-udl.herokuapp.com" target="_blank">reciclame-udl.herokuapp.com</a>
+The website is deployed using heroku, thus u can find the Procfile.<br/>
+<a href="https://reciclame-udl.herokuapp.com" target="_blank">reciclame-udl.herokuapp.com</a>
 
 ## Requirements
 
@@ -24,8 +24,6 @@ You may also use Yarn if preferred.
 
         $ sudo apt install nodejs
         $ sudo apt install npm
-    
-- #### Node installion on MacOS
 
 - #### Other
 
@@ -40,3 +38,5 @@ If the installation was successful, you should be abel to run
 Also, if you need to update `npm`, you can make it using `npm`! Cool right? After running the following command, just open again the command line and be happy.
 
     $ npm install -g npm
+
+---
